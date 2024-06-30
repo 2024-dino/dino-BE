@@ -25,7 +25,7 @@ permissions: write-all
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true
+#    if: github.event.pull_request.merged == true
 
     steps: # STEP BY STEP 실행
       - uses: actions/checkout@v3
