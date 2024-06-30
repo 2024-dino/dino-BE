@@ -100,12 +100,12 @@ jobs:
             export JWT=${{ secrets.JWT}}\n
             export JWT_EXPIRATION=${{ secrets.JWT_EXPIRATION }} \n
             export JWT_HEADER=${{ secrets.JWT_HEADER }}\n
-            export KAKAO_CLIENT_ID=${{ KAKAO_CLIENT_ID }}\n
-            export KAKAO_CLIENT_SECRET=${{ KAKAO_CLIENT_SECRET }}\n
-            export KAKAO_REDIRECT_URL=${{ KAKAO_REDIRECT_URL }}\n
-            export GOOGLE_CLIENT_ID=${{ GOOGLE_CLIENT_ID }}\n
-            export GOOGLE_CLIENT_SECRET=${{ GOOGLE_CLIENT_SECRET }}\n
-            export GOOGLE_REDIRECT_URL=${{ GOOGLE_REDIRECT_URL }}\n
+            export KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}\n
+            export KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}\n
+            export KAKAO_REDIRECT_URL=${{ secrets.KAKAO_REDIRECT_URL }}\n
+            export GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}\n
+            export GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}\n
+            export GOOGLE_REDIRECT_URL=${{ secrets.GOOGLE_REDIRECT_URL }}\n
             nohup java -jar ./libs/dino-BE-0.0.1-SNAPSHOT.jar > /home/ubuntu/dio_be.log 2>&1 &" > dino_start.sh
         #생성된 쉘 스크립트에 실행 권한 부여
       - name: Grant execute permission for start.sh
