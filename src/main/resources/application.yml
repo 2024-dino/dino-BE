@@ -1,0 +1,7 @@
+
+
+spring:
+  application:
+    name: dino-BE
+  profiles:
+    active: dev #dev or local
