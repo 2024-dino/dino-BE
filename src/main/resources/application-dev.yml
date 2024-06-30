@@ -1,5 +1,6 @@
 spring:
   datasource:
+        #DEV H2 임시
         driver-class-name: org.h2.Driver  # Database를 H2로 사용하겠다.
         url: jdbc:h2:mem:testdb  # H2 접속 정보
         username: sa  # H2 접속 시 입력할 username 정보 (원하는 것으로 입력)
@@ -28,6 +29,41 @@ spring:
       max-request-size: 500MB
 
 
+
+  #Oauth2
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope: profile, email
+            redirect-uri: ${GOOGLE_REDIRECT_URL}
+
+
+          kakao:
+            client-id: ${KAKAO_CLIENT_ID}
+            client-secret: ${KAKAO_CLIENT_SECRET}
+            redirect-uri: ${KAKAO_REDIRECT_URL}
+            client-authentication-method: client_secret_post
+            authorization-grant-type: authorization_code
+            scope: profile_nickname
+            client-name: Kakao
+
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+
+jwt:
+  secret : ${JWT}
+  access:
+    expiration: ${JWT_EXPIRATION}
+    header: ${JWT_HEADER}
 
 
 server:
