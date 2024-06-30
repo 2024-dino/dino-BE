@@ -80,7 +80,7 @@ jobs:
           host: ${{ secrets.LIGHTSAIL_HOST }}
           username: ${{env.LIGHTSAIL_USERNAME}}
           key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
-          script: chmod +x dino_stop.sh
+          script: sudo chmod +x dino_stop.sh
 
       - name: Stop the running server
         uses: appleboy/ssh-action@master
@@ -88,7 +88,7 @@ jobs:
           host: ${{ secrets.LIGHTSAIL_HOST }}
           username: ${{ env.LIGHTSAIL_USERNAME }}
           key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
-          script: ./dino_stop.sh
+          script: sudo ./dino_stop.sh
         #배포 쉘스크립트 동적 생성
       - name: make start.sh
         uses: appleboy/ssh-action@master
@@ -114,7 +114,8 @@ jobs:
           host: ${{ secrets.LIGHTSAIL_HOST }}
           username: ${{env.LIGHTSAIL_USERNAME}}
           key: ${{ secrets.LIGHTSAIL_SSH_KEY }}
-          script: chmod +x dino_start.sh
+          script: sudo chmod +x dino_start.sh
+
 
         #서버 시작.
       - name: Start server
