@@ -1,4 +1,4 @@
-package khu.dino.service;
+package khu.dino.member.business;
 
 
 
