@@ -1,4 +1,4 @@
-package khu.dino.config;
+package khu.dino.common.config;
 
 
 import org.springframework.context.annotation.Configuration;

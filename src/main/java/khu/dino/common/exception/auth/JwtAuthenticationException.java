@@ -1,4 +1,4 @@
-package khu.dino.exception.auth;
+package khu.dino.common.exception.auth;
 
 import org.springframework.security.core.AuthenticationException;
 

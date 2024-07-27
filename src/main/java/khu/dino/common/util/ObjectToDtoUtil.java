@@ -1,4 +1,4 @@
-package khu.dino.util;
+package khu.dino.common.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,8 +1,9 @@
-package khu.dino.config;
+package khu.dino.common.config;
 
 
 import khu.dino.auth.*;
-import khu.dino.service.CustomOAuth2UserService;
+import khu.dino.common.config.auth.*;
+import khu.dino.common.auth.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;

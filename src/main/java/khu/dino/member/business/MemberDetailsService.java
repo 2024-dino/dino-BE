@@ -4,7 +4,7 @@ package khu.dino.service;
 
 import khu.dino.auth.PrincipalDetails;
 import khu.dino.domain.Member;
-import khu.dino.repository.MemberRepository;
+import khu.dino.member.persistence.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

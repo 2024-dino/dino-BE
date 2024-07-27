@@ -1,4 +1,4 @@
-package khu.dino.exception;
+package khu.dino.common.exception;
 
 import lombok.*;
 
