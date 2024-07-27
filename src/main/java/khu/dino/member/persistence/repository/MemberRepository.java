@@ -1,4 +1,4 @@
-package khu.dino.repository;
+package khu.dino.member.persistence.repository;
 
 import khu.dino.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
