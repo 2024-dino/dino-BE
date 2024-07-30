@@ -1,8 +1,9 @@
-package khu.dino.domain;
+package khu.dino.member.persistence;
 
 
 
 import jakarta.persistence.*;
+import khu.dino.domain.OAuth2Provider;
 import khu.dino.domain.base.BaseEntity;
 import lombok.*;
 
