@@ -1,4 +1,4 @@
-package khu.dino.auth;
+package khu.dino.common.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package khu.dino.auth;
+package khu.dino.common.auth;
 
 import khu.dino.domain.OAuth2Provider;
 import lombok.AllArgsConstructor;

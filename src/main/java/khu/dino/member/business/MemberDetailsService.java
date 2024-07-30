@@ -2,7 +2,7 @@ package khu.dino.member.business;
 
 
 
-import khu.dino.auth.PrincipalDetails;
+import khu.dino.common.auth.PrincipalDetails;
 import khu.dino.member.persistence.Member;
 import khu.dino.member.persistence.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;

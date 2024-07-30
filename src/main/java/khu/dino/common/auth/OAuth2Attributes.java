@@ -1,12 +1,11 @@
-package khu.dino.auth;
+package khu.dino.common.auth;
 
 
-
-import khu.dino.auth.info.GoogleUserInformation;
-import khu.dino.auth.info.KakaoUserInformation;
-import khu.dino.auth.info.Oauth2UserInformation;
-import khu.dino.domain.Member;
+import khu.dino.common.auth.info.GoogleUserInformation;
+import khu.dino.common.auth.info.KakaoUserInformation;
+import khu.dino.common.auth.info.Oauth2UserInformation;
 import khu.dino.domain.OAuth2Provider;
+import khu.dino.member.persistence.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
