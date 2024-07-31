@@ -1,9 +1,9 @@
-package khu.dino.domain;
+package khu.dino.member.persistence;
 
 
 
 import jakarta.persistence.*;
-import khu.dino.domain.base.BaseEntity;
+import khu.dino.common.base.BaseEntity;
 import lombok.*;
 
 @Getter

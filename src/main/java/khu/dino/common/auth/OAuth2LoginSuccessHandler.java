@@ -1,13 +1,12 @@
-package khu.dino.auth;
+package khu.dino.common.auth;
 
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import khu.dino.auth.info.CustomOAuth2User;
-import khu.dino.domain.Member;
+import khu.dino.common.auth.info.CustomOAuth2User;
+import khu.dino.member.persistence.Member;
 import khu.dino.member.persistence.repository.MemberRepository;
-import khu.dino.common.auth.JwtProviderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

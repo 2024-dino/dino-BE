@@ -1,4 +1,4 @@
-package khu.dino.auth.info;
+package khu.dino.common.auth.info;
 
 import java.util.Map;
 

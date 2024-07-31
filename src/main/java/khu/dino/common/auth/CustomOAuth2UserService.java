@@ -2,10 +2,9 @@ package khu.dino.common.auth;
 
 
 
-import khu.dino.auth.OAuth2Attributes;
-import khu.dino.auth.info.CustomOAuth2User;
-import khu.dino.domain.Member;
-import khu.dino.domain.OAuth2Provider;
+import khu.dino.common.auth.info.CustomOAuth2User;
+import khu.dino.member.persistence.OAuth2Provider;
+import khu.dino.member.persistence.Member;
 import khu.dino.member.persistence.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

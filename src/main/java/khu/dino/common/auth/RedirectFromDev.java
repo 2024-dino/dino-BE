@@ -1,4 +1,4 @@
-package khu.dino.auth;
+package khu.dino.common.auth;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;

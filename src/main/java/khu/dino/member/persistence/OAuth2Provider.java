@@ -1,4 +1,4 @@
-package khu.dino.domain;
+package khu.dino.member.persistence;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

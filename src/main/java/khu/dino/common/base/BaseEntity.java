@@ -1,4 +1,4 @@
-package khu.dino.domain.base;
+package khu.dino.common.base;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

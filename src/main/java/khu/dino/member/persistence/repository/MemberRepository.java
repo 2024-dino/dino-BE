@@ -1,6 +1,6 @@
 package khu.dino.member.persistence.repository;
 
-import khu.dino.domain.Member;
+import khu.dino.member.persistence.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
