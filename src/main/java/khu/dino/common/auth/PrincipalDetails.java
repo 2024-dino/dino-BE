@@ -1,6 +1,6 @@
 package khu.dino.common.auth;
 
-import khu.dino.domain.OAuth2Provider;
+import khu.dino.member.persistence.OAuth2Provider;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,10 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 
 @AllArgsConstructor

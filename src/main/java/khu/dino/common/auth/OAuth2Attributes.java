@@ -4,7 +4,7 @@ package khu.dino.common.auth;
 import khu.dino.common.auth.info.GoogleUserInformation;
 import khu.dino.common.auth.info.KakaoUserInformation;
 import khu.dino.common.auth.info.Oauth2UserInformation;
-import khu.dino.domain.OAuth2Provider;
+import khu.dino.member.persistence.OAuth2Provider;
 import khu.dino.member.persistence.Member;
 import lombok.Builder;
 import lombok.Getter;
