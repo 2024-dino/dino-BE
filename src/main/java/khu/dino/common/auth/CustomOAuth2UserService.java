@@ -3,7 +3,7 @@ package khu.dino.common.auth;
 
 
 import khu.dino.common.auth.info.CustomOAuth2User;
-import khu.dino.member.persistence.OAuth2Provider;
+import khu.dino.member.persistence.enums.OAuth2Provider;
 import khu.dino.member.persistence.Member;
 import khu.dino.member.persistence.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -48,25 +48,25 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         OAuth2Attributes extractAttributes = OAuth2Attributes.of(oAuth2Provider, userNameAttributeName, attributes);
 
-        Optional<Member> member = memberRepository.findByUsername(extractAttributes.getOauth2UserInfo().getIdentifierKey());
+        Optional<Member> member = memberRepository.findBySocialId(extractAttributes.getOauth2UserInfo().getIdentifierKey());
+        //자동 회원가입
         if(!member.isPresent()){
             log.info("존재하지 않음");
-
             Member createdMember = memberRepository.save(extractAttributes.toEntity(oAuth2Provider, extractAttributes.getOauth2UserInfo()));
             return new CustomOAuth2User(
-                    Collections.singleton(new SimpleGrantedAuthority(createdMember.getRole())),
+                    Collections.singleton(new SimpleGrantedAuthority(createdMember.getUserRole().name())),
                     attributes,
                     extractAttributes.getNameAttributeKey(),
-                    createdMember.getUsername(),
-                    createdMember.getRole()
+                    createdMember.getSocialId(),
+                    createdMember.getUserRole()
             );
         }else{
             return new CustomOAuth2User(
-                    Collections.singleton(new SimpleGrantedAuthority(member.get().getRole())),
+                    Collections.singleton(new SimpleGrantedAuthority(member.get().getUserRole().name())),
                     attributes,
                     extractAttributes.getNameAttributeKey(),
-                    member.get().getUsername(),
-                    member.get().getRole()
+                    member.get().getSocialId(),
+                    member.get().getUserRole()
             );
         }
     }

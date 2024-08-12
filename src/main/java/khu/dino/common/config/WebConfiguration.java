@@ -1,18 +1,24 @@
 package khu.dino.common.config;
 
 
+import khu.dino.common.annotation.resolver.AuthMemberArgumentResolver;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
+@RequiredArgsConstructor
 @EnableWebMvc
 public class WebConfiguration implements WebMvcConfigurer {
+    private final AuthMemberArgumentResolver authMemberArgumentResolver;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -21,6 +27,14 @@ public class WebConfiguration implements WebMvcConfigurer {
                 .allowedHeaders("authorization", "User-Agent", "Cache-Control", "Content-Type")
                 .exposedHeaders("authorization", "User-Agent", "Cache-Control", "Content-Type")
                 .allowedMethods("*");
+    }
+
+
+
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolverList) {
+        resolverList.add(authMemberArgumentResolver);
     }
 
     @Override

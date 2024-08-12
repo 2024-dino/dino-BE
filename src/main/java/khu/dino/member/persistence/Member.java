@@ -4,7 +4,11 @@ package khu.dino.member.persistence;
 
 import jakarta.persistence.*;
 import khu.dino.common.base.BaseEntity;
+import khu.dino.member.persistence.enums.MemberStatus;
+import khu.dino.member.persistence.enums.OAuth2Provider;
+import khu.dino.member.persistence.enums.UserRole;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @ToString(callSuper = true)
@@ -19,7 +23,7 @@ public class Member extends BaseEntity  {
     private Long id;
 
     @Column(nullable = false)
-    private String username; //OAuth2 고유 식별자
+    private String socialId; //OAuth2 고유 식별자
 
     @Column(nullable = false)
     private String nickname;
@@ -29,10 +33,17 @@ public class Member extends BaseEntity  {
     @Enumerated(EnumType.STRING)
     private OAuth2Provider oAuth2Provider;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private MemberStatus memberStatus;
+
+
+
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     @Builder.Default
-    private String role = "ROLE_USER";
+    private UserRole userRole = UserRole.ROLE_USER;
 
 
 

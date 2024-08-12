@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import khu.dino.common.auth.info.CustomOAuth2User;
 import khu.dino.member.persistence.Member;
+import khu.dino.member.persistence.enums.UserRole;
 import khu.dino.member.persistence.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,13 +35,13 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         log.info("소셜 로그인 성공");
         String username = extractUsername(authentication);
-        String accessToken = jwtProviderService.generateAccessToken(username, "ROLE_USER");
+        String accessToken = jwtProviderService.generateAccessToken(username, UserRole.ROLE_USER.name());
 
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json;charset=UTF-8");
 
-        Member member = memberRepository.findByUsername(username).get();
+        Member member = memberRepository.findBySocialId(username).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
 
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         queryParams.add("id", String.valueOf(member.getId()));

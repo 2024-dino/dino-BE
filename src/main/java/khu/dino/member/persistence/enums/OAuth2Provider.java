@@ -1,4 +1,4 @@
-package khu.dino.member.persistence;
+package khu.dino.member.persistence.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

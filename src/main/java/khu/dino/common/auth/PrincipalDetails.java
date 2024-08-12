@@ -1,10 +1,8 @@
 package khu.dino.common.auth;
 
-import khu.dino.member.persistence.OAuth2Provider;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import khu.dino.member.persistence.enums.OAuth2Provider;
+import khu.dino.member.persistence.enums.UserRole;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,18 +15,20 @@ import java.util.Collections;
 @NoArgsConstructor
 @Builder
 @Getter
+@ToString
+@EqualsAndHashCode
 public class PrincipalDetails implements UserDetails {
 
     private Long id;
     private String nickname; //유저 이름
-    private String username; //OAuth2 고유 식별자
+    private String socialId; //OAuth2 고유 식별자
     private OAuth2Provider oAuth2Provider; //OAuth2 제공자
     @Builder.Default
-    private String role = "ROLE_USER"; //ROLE, 기본은 USER
+    private UserRole userRole = UserRole.ROLE_USER; //ROLE, 기본은 USER
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(this.role));
+        return Collections.singleton(new SimpleGrantedAuthority(this.userRole.name()));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.socialId;
     } //사용자의 고유 OAUTH 식별자
 
     @Override

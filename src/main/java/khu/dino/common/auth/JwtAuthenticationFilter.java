@@ -5,8 +5,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import khu.dino.common.auth.JwtProviderService;
-import khu.dino.member.business.MemberDetailsService;
+import khu.dino.member.business.MemberService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtProviderService jwtProviderService;
 
-    private final MemberDetailsService memberDetailsService;
+    private final MemberService memberService;
 
 
 
@@ -44,7 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (jwt.isPresent() && SecurityContextHolder.getContext().getAuthentication() == null && jwtProviderService.validateToken(jwt.get())) {
             //토큰이 유효할 떄 아래 로직을 수행한다.
             String OAuth2Id = jwtProviderService.extractOAuth2Id(jwt.get());
-            UserDetails userDetails = memberDetailsService.loadUserByUsername(OAuth2Id);
+            UserDetails userDetails = memberService.loadUserByUsername(OAuth2Id);
             Authentication authentication = jwtProviderService.getAuthentication(userDetails);
 
             SecurityContext securityContext = SecurityContextHolder.createEmptyContext();

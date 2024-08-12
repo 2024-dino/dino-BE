@@ -4,8 +4,10 @@ package khu.dino.common.auth;
 import khu.dino.common.auth.info.GoogleUserInformation;
 import khu.dino.common.auth.info.KakaoUserInformation;
 import khu.dino.common.auth.info.Oauth2UserInformation;
-import khu.dino.member.persistence.OAuth2Provider;
+import khu.dino.member.persistence.enums.MemberStatus;
+import khu.dino.member.persistence.enums.OAuth2Provider;
 import khu.dino.member.persistence.Member;
+import khu.dino.member.persistence.enums.UserRole;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -57,9 +59,10 @@ public class OAuth2Attributes {
     public Member toEntity(OAuth2Provider oAuth2Provider, Oauth2UserInformation oauth2UserInfo) {
         return Member.builder()
                 .oAuth2Provider(oAuth2Provider)
-                .username(oauth2UserInfo.getIdentifierKey())
+                .memberStatus(MemberStatus.ACTIVE)
+                .socialId(oauth2UserInfo.getIdentifierKey())
                 .nickname(oauth2UserInfo.getNickname())
-                .role("ROLE_USER")
+                .userRole(UserRole.ROLE_USER)
                 .build();
     }
 }
