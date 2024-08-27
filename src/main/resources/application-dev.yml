@@ -1,10 +1,10 @@
 spring:
+
   datasource:
-        #DEV H2 임시
-        driver-class-name: org.h2.Driver  # Database를 H2로 사용하겠다.
-        url: jdbc:h2:mem:testdb  # H2 접속 정보
-        username: sa  # H2 접속 시 입력할 username 정보 (원하는 것으로 입력)
-        password:  # H2 접속 시 입력할 password 정보 (원하는 것으로 입력)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DATA_SOURCE_URL}
+    username: ${DATA_SOURCE_USERNAME}
+    password: ${DATA_SOURCE_PW}
   # JPA
   jpa:
     hibernate:
@@ -13,7 +13,7 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
 
   h2:
     console:
@@ -71,3 +71,17 @@ server:
     enabled: true
     mime-types: text/html,text/plain,text/css,application/javascript, application/json, application/zip, application/octet-stream, application/pdf, video/mp4
   port: 60000
+
+
+cloud:
+  aws:
+    s3:
+      bucket_name: ${BUCKET_NAME}
+    credentials:
+      access-key: ${S3_ACCESS_KEY}
+      secret-key: ${S3_SECRET_KEY}
+    region:
+      static: ${S3_REGION}
+      auto: false
+    stack:
+      auto: false

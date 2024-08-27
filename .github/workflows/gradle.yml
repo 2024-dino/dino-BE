@@ -106,6 +106,13 @@ jobs:
             export GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}\n
             export GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}\n
             export GOOGLE_REDIRECT_URL=${{ secrets.GOOGLE_REDIRECT_URL }}\n
+            export BUCKET_NAME=${{ secrets.BUCKET_NAME }}\n
+            export S3_ACCESS_KEY=${{ secrets.S3_ACCESS_KEY }}\n
+            export S3_SECRET_KEY=${{ secrets.S3_SECRET_KEY }}\n
+            export S3_REGION=${{ secrets.S3_REGION }}\n
+            export DATA_SOURCE_URL=${{ secrets.DATA_SOURCE_URL }}\n
+            export DATA_SOURCE_USERNAME=${{ secrets.DATA_SOURCE_USERNAME }}\n
+            export DATA_SOURCE_PW=${{ secrets.DATA_SOURCE_PW }}\n
             nohup java -jar ./libs/dino-BE-0.0.1-SNAPSHOT.jar > /home/ubuntu/dio_be.log 2>&1 &" > dino_start.sh
         #생성된 쉘 스크립트에 실행 권한 부여
       - name: Grant execute permission for start.sh
