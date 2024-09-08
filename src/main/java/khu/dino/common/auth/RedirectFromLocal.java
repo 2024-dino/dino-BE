@@ -9,6 +9,6 @@ public class RedirectFromLocal implements RedirectFromProfile{
 
     @Override
     public String getRedirectUrl() {
-        return "http://localhost";
+        return "http://localhost:3000";
     }
 }
