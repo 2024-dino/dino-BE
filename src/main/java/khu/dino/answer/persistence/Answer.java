@@ -2,6 +2,7 @@ package khu.dino.answer.persistence;
 
 import jakarta.persistence.*;
 import khu.dino.common.base.BaseEntity;
+import khu.dino.question.persistence.Question;
 import lombok.*;
 
 @Getter
@@ -17,5 +18,8 @@ public class Answer extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id")
+    private Question question;
 
 }

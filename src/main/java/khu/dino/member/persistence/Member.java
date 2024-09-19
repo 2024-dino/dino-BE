@@ -4,11 +4,14 @@ package khu.dino.member.persistence;
 
 import jakarta.persistence.*;
 import khu.dino.common.base.BaseEntity;
+import khu.dino.event.persistence.Event;
 import khu.dino.member.persistence.enums.MemberStatus;
 import khu.dino.member.persistence.enums.OAuth2Provider;
 import khu.dino.member.persistence.enums.UserRole;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+
+import java.util.List;
 
 @Getter
 @ToString(callSuper = true)
@@ -37,15 +40,13 @@ public class Member extends BaseEntity  {
     @Enumerated(EnumType.STRING)
     private MemberStatus memberStatus;
 
-
-
-
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private UserRole userRole = UserRole.ROLE_USER;
 
-
+    @OneToMany(mappedBy = "creator")
+    private List<Event> eventList;
 
 
 }
