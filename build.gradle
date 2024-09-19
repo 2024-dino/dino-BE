@@ -76,6 +76,9 @@ dependencies {
 
     //JSON parser
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+    //Quartz Scheduler
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-quartz', version: '2.3.2.RELEASE'
 }
 
 tasks.named('test') {

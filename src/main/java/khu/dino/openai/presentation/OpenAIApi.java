@@ -4,6 +4,7 @@ package khu.dino.openai.presentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import khu.dino.common.scheduler.PushNotificationScheduler;
 import khu.dino.openai.OpenAIFeignClient;
 import khu.dino.openai.presentation.dto.OpenAIRequestDto;
 import khu.dino.openai.presentation.dto.OpenAIResponseDto;
@@ -14,6 +15,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.http.ResponseEntity;
@@ -39,6 +41,8 @@ public class OpenAIApi {
 
     private final OpenAIFeignClient openAIFeignClient;
 
+    private final PushNotificationScheduler pushNotificationScheduler;
+
 
     /**
      * OpenAI API 테스트 용
@@ -50,11 +54,10 @@ public class OpenAIApi {
      * @return
      * @throws java.text.ParseException
      */
-
     @Deprecated
     @Operation(summary="OpenAI API 테스트 용", description = "질문과 감정, 질뭇 갯수에 따른 생성일 발행 API")
     @GetMapping("/chat")
-    public ResponseEntity<Map<Long, String>> chat(@RequestParam(name = "event-title")String eventTitle, @RequestParam("emotion") String emotion, @RequestParam(value = "discription", required = false)String discription,  @RequestParam(name = "question-size") Integer questionSize) throws java.text.ParseException {
+    public ResponseEntity<Map<Long, String>> chat(@RequestParam(name = "event-title")String eventTitle, @RequestParam("emotion") String emotion, @RequestParam(value = "discription", required = false)String discription,  @RequestParam(name = "question-size") Integer questionSize) throws java.text.ParseException, SchedulerException {
         OpenAIRequestDto.OpenAIRequestMessage systemMessage = OpenAIRequestDto.OpenAIRequestMessage.builder()
                 .role("system")
                 .content("너는 나에게 이 이벤트와 관련된 질문을 제공해주는 말동무이자 친구 역할이야. 초반에는 해당 일정에 대한 간단한 정보를 묻는 질문이 좋을 것 같고, " +
@@ -104,6 +107,9 @@ public class OpenAIApi {
         for(int i = 0; i < result.size(); i++){
             log.info("질문 내용 : " + result.get((long) i + 1) + ", 질문 발생일: " + pushDates.get(i));
         }
+
+        //비동기 적으로 실행됨
+        pushNotificationScheduler.schedulePushNotification(pushDates);
 
         return ResponseEntity.ok(result);
 
