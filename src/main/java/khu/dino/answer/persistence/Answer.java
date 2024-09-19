@@ -1,0 +1,25 @@
+package khu.dino.answer.persistence;
+
+import jakarta.persistence.*;
+import khu.dino.common.base.BaseEntity;
+import khu.dino.question.persistence.Question;
+import lombok.*;
+
+@Getter
+@ToString(callSuper = true)
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "answer")
+@Builder
+public class Answer extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id")
+    private Question question;
+
+}

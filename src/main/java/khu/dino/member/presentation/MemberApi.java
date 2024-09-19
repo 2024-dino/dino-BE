@@ -1,6 +1,8 @@
 package khu.dino.member.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +25,10 @@ import java.io.IOException;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@ApiResponses({
+        @ApiResponse(responseCode = "200", description = "OK 성공"),
+        @ApiResponse(responseCode = "500", description = "서버 에러, 백앤드 개발자에게 알려주세요."),
+})
 @Tag(name = "Member 관련 API 목록", description = "Member 관련 API 목록입니다.")
 @RequestMapping("/api/v1/auth")
 public class MemberApi {
