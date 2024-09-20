@@ -44,7 +44,7 @@ jobs:
           arguments: build
         #jar 실행파일생성
       - name: Build the *.jar executable as Gradle
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: jarfile
           path: build/libs/dino-BE-0.0.1-SNAPSHOT.jar
