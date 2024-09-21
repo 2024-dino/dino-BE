@@ -1,10 +1,9 @@
 spring:
-
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DATA_SOURCE_URL}
-    username: ${DATA_SOURCE_USERNAME}
-    password: ${DATA_SOURCE_PW}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: ${DB_URL}
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
   # JPA
   jpa:
     hibernate:
@@ -13,14 +12,7 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
-    database-platform: org.hibernate.dialect.MySQL8Dialect
 
-  h2:
-    console:
-      enabled: true
-      path: /console
-      settings:
-        web-allow-others: true
 
 
   servlet:
@@ -85,3 +77,9 @@ cloud:
       auto: false
     stack:
       auto: false
+
+
+openai:
+  model: ${OPENAI_MODEL}
+  api:
+    key: ${OPENAI_API_KEY}
