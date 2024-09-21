@@ -1,6 +1,7 @@
 package khu.dino.answer.persistence;
 
 import jakarta.persistence.*;
+import khu.dino.answer.persistence.enums.Type;
 import khu.dino.common.base.BaseEntity;
 import khu.dino.question.persistence.Question;
 import lombok.*;
@@ -22,4 +23,11 @@ public class Answer extends BaseEntity {
     @JoinColumn(name = "question_id")
     private Question question;
 
+    private String content;
+
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
+    private String fileUrl;
+    private String fileName;
 }

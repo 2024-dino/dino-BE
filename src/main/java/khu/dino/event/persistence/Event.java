@@ -2,9 +2,11 @@ package khu.dino.event.persistence;
 
 import jakarta.persistence.*;
 import khu.dino.common.base.BaseEntity;
-import khu.dino.event.persistence.enums.Category;
+import khu.dino.common.enums.Step;
 import khu.dino.event.persistence.enums.Emotion;
 import khu.dino.event.persistence.enums.Status;
+import khu.dino.growthObject.persistence.GrowthObject;
+import khu.dino.growthObject.persistence.enums.Category;
 import khu.dino.member.persistence.Member;
 import khu.dino.question.persistence.Question;
 import lombok.*;
@@ -38,7 +40,8 @@ public class Event extends BaseEntity {
 
     private boolean isDeleted;
 
-    private int growth;
+    @Enumerated(EnumType.STRING)
+    private Step step;
 
     @Enumerated(EnumType.STRING)
     private Status eventStatus;
@@ -46,6 +49,13 @@ public class Event extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Emotion emotion;
 
+    @OneToOne
+    @JoinColumn(name = "representative_question_id")
+    private Question representativeQuestion;
+
+    @OneToOne
+    @JoinColumn(name =  "growth_object_id")
+    private GrowthObject growthObject;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
