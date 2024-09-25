@@ -79,6 +79,9 @@ dependencies {
 
     //Quartz Scheduler
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-quartz', version: '2.3.2.RELEASE'
+
+    // firebase
+    implementation 'com.google.firebase:firebase-admin:9.2.0'
 }
 
 tasks.named('test') {

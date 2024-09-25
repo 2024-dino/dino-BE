@@ -2,7 +2,7 @@ package khu.dino.member.business;
 
 import khu.dino.common.annotation.Mapper;
 import khu.dino.member.persistence.Member;
-import khu.dino.member.presentation.dto.MemberReseponseDto;
+import khu.dino.member.presentation.dto.MemberResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,8 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberMapper {
 
 
-    public MemberReseponseDto.MemberResponse toMemberResponse(Member member) {
-        return MemberReseponseDto.MemberResponse.builder()
+    public MemberResponseDto.MemberResponse toMemberResponse(Member member) {
+        return MemberResponseDto.MemberResponse.builder()
                 .id(member.getId())
                 .socialId(member.getSocialId())
                 .nickname(member.getNickname())
@@ -21,6 +21,12 @@ public class MemberMapper {
                 .oAuth2Provider(member.getOAuth2Provider())
                 .socialId(member.getSocialId())
                 .memberStatus(member.getMemberStatus())
+                .build();
+    }
+    public static MemberResponseDto.saveFcmToken toSaveFcmToken(Member member, boolean isSuccess) {
+        return MemberResponseDto.saveFcmToken.builder()
+                .memberId(member.getId())
+                .isSaveFcmToken(isSuccess)
                 .build();
     }
 }
