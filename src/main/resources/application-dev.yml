@@ -86,3 +86,6 @@ openai:
   model: ${OPENAI_MODEL}
   api:
     key: ${OPENAI_API_KEY}
+
+firebase:
+  admin-sdk: ${FCM_KEY}

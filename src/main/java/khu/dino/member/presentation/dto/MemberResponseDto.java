@@ -1,13 +1,12 @@
 package khu.dino.member.presentation.dto;
 
-import khu.dino.common.auth.OAuth2Attributes;
 import khu.dino.member.persistence.enums.MemberStatus;
 import khu.dino.member.persistence.enums.OAuth2Provider;
 import khu.dino.member.persistence.enums.UserRole;
 import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class MemberReseponseDto {
+public class MemberResponseDto {
     @Getter
     @Setter
     @Builder
@@ -20,6 +19,14 @@ public class MemberReseponseDto {
         private MemberStatus memberStatus;
         private UserRole userRole;
         private String nickname;
+    }
 
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class saveFcmToken {
+        private Long memberId;
+        private boolean isSaveFcmToken;
     }
 }
