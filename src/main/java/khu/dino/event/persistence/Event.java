@@ -10,8 +10,10 @@ import khu.dino.growthObject.persistence.enums.Category;
 import khu.dino.member.persistence.Member;
 import khu.dino.question.persistence.Question;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Getter
@@ -33,6 +35,9 @@ public class Event extends BaseEntity {
     private Category category;
 
     private String memo;
+
+    @DateTimeFormat(pattern = "HH:mm")
+    private LocalTime occurrenceTime;
 
     private LocalDateTime startDate;
 
