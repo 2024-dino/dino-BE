@@ -59,4 +59,10 @@ public class EventService {
                 }).toList();
     }
 
+    @Transactional(readOnly = false)
+    public void modifyEventInfo(Member member, Long eventId, EventRequestDto.modifyEventInfoDto request){
+        Event event = eventQueryAdapter.findById(eventId);
+        eventCommandAdapter.update(event, request);
+    }
+
 }

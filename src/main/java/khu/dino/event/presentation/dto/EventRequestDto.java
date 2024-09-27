@@ -43,6 +43,21 @@ public class EventRequestDto {
 
         private Long questionSize;
 
+    }
+
+    @Getter
+    public static class modifyEventInfoDto{
+
+        private String memo;
+
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        private LocalDate endDate;
+
+        @Schema(type = "string", example = "14:30")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+        @DateTimeFormat(pattern = "HH:mm")
+        private LocalTime occurrenceTime;
 
     }
 }

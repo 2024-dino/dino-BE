@@ -41,6 +41,15 @@ public class EventApi {
     }
 
 
+    @Operation(summary="이벤트 일정 수정하기", description = "이벤트 일정을 수정하는 API 입니다.")
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/{eventId}")
+    public CommonResponse<List<EventResponseDto.MainEvent>> modifyEvent(@AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails,
+        @PathVariable(name = "eventId") Long eventId,
+        @RequestBody EventRequestDto.modifyEventInfoDto request) {
+        eventService.modifyEventInfo(principalDetails.getMember(), eventId, request);
+        return CommonResponse.onSuccess(null);
+    }
 
 
 
@@ -57,7 +66,9 @@ public class EventApi {
 
 
 
-    @Operation(summary="메인 특정 이벤트 불러오기", description = "메인 화면을 불러오는 API입니다. ")
+
+
+        @Operation(summary="메인 특정 이벤트 불러오기", description = "메인 화면을 불러오는 API입니다. ")
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/main")
     public CommonResponse<List<EventResponseDto.MainEvent>> getMainEvent(@AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails) {

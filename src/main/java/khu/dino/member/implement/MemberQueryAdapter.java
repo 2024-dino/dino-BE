@@ -12,6 +12,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class MemberQueryAdapter {
     private final MemberRepository memberRepository;
 
+    public Member findById(Long id){
+        return memberRepository.findById(id).get();
+    }
 
     public PrincipalDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Member member = memberRepository.findBySocialId(username).orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));

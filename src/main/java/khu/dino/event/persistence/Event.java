@@ -5,6 +5,7 @@ import khu.dino.common.base.BaseEntity;
 import khu.dino.common.enums.Step;
 import khu.dino.event.persistence.enums.Emotion;
 import khu.dino.event.persistence.enums.Status;
+import khu.dino.event.presentation.dto.EventRequestDto;
 import khu.dino.growthObject.persistence.GrowthObject;
 import khu.dino.growthObject.persistence.enums.Category;
 import khu.dino.member.persistence.Member;
@@ -82,5 +83,10 @@ public class Event extends BaseEntity {
     private List<Question> questionList = new ArrayList<>();
 
 
+    public void update(EventRequestDto.modifyEventInfoDto request){
+        this.endDate = request.getEndDate();
+        this.memo = request.getMemo();
+        this.occurrenceTime = request.getOccurrenceTime();
+    }
 
 }
