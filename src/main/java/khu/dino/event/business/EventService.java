@@ -30,6 +30,7 @@ public class EventService {
 
     @Transactional(readOnly = false)
     public Long saveNewEvent(Member member, EventRequestDto.saveEventDto request){
+        log.info(member.toString());
         return eventCommandAdapter.save(EventMapper.toEvent(member, request));
     }
 
