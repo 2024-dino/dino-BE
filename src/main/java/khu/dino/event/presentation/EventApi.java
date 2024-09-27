@@ -35,9 +35,9 @@ public class EventApi {
     @PostMapping("/")
     @Operation(summary = "새 이벤트 등록", description = "새로운 이벤트를 등록하는 API 입니다.")
     public CommonResponse<Long> createEvent(
-            @AuthMember @Parameter(hidden = true) Member member,
+            @AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails,
             @RequestBody final EventRequestDto.saveEventDto request) {
-        return CommonResponse.onSuccess(eventService.saveNewEvent(member, request));
+        return CommonResponse.onSuccess(eventService.saveNewEvent(principalDetails.getMember(), request));
     }
 
 
@@ -57,10 +57,10 @@ public class EventApi {
 
 
 
-    @Operation(summary="메인 특정 이벤트 불러오기", description = "JWT 유효성 확인 및 기본 유저 정보 반환")
+    @Operation(summary="메인 특정 이벤트 불러오기", description = "메인 화면을 불러오는 API입니다. ")
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/main")
-    public CommonResponse<List<EventResponseDto.MainEvent>> getMainEvent(@AuthMember PrincipalDetails principalDetails) {
+    public CommonResponse<List<EventResponseDto.MainEvent>> getMainEvent(@AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails) {
         return CommonResponse.onSuccess(eventService.getMainEvent(principalDetails));
     }
 

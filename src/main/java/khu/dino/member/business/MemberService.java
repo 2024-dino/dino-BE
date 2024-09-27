@@ -29,7 +29,6 @@ public class MemberService implements UserDetailsService {
 
 
     public MemberResponseDto.MemberResponse validateJwt(PrincipalDetails principalDetails) {
-        Member member = memberQueryAdapter.validateJwt(principalDetails);
-        return memberMapper.toMemberResponse(member);
+        return memberMapper.toMemberResponse(principalDetails.getMember());
     }
 }

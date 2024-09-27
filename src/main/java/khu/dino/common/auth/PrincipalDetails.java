@@ -1,5 +1,6 @@
 package khu.dino.common.auth;
 
+import khu.dino.member.persistence.Member;
 import khu.dino.member.persistence.enums.OAuth2Provider;
 import khu.dino.member.persistence.enums.UserRole;
 import lombok.*;
@@ -16,19 +17,20 @@ import java.util.Collections;
 @Builder
 @Getter
 @ToString
-@EqualsAndHashCode
-public class PrincipalDetails implements UserDetails {
+public class PrincipalDetails implements UserDetails  {
 
-    private Long id;
-    private String nickname; //유저 이름
-    private String socialId; //OAuth2 고유 식별자
-    private OAuth2Provider oAuth2Provider; //OAuth2 제공자
-    @Builder.Default
-    private UserRole userRole = UserRole.ROLE_USER; //ROLE, 기본은 USER
+//    private Long id;
+//    private String nickname; //유저 이름
+//    private String socialId; //OAuth2 고유 식별자
+//    private OAuth2Provider oAuth2Provider; //OAuth2 제공자
+//    @Builder.Default
+//    private UserRole userRole = UserRole.ROLE_USER; //ROLE, 기본은 USER
+    Member member;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(this.userRole.name()));
+        return Collections.singleton(new SimpleGrantedAuthority(this.member.getUserRole().name()));
     }
 
     @Override
@@ -38,7 +40,7 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.socialId;
+        return this.member.getSocialId();
     } //사용자의 고유 OAUTH 식별자
 
     @Override

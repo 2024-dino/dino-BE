@@ -15,18 +15,11 @@ public class MemberQueryAdapter {
 
     public PrincipalDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Member member = memberRepository.findBySocialId(username).orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
-        return PrincipalDetails.builder()
-                .id(member.getId())
-                .nickname(member.getNickname())
-                .userRole(member.getUserRole())
-                .oAuth2Provider(member.getOAuth2Provider())
-                .socialId(member.getSocialId()) //사용자를 구별하는 고유한 값(OAUTH 벤더 식별자)
+        return  PrincipalDetails.builder()
+                .member(member)
                 .build();
+
+
     }
 
-
-    public Member validateJwt(PrincipalDetails principalDetails) {
-        return memberRepository.findById(principalDetails.getId()).orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
-
-    }
 }

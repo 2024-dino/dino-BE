@@ -16,6 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -72,10 +73,14 @@ public class Event extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
+    @ToString.Exclude
     private Member creator;
 
 
     @OneToMany(mappedBy = "event")
-    private List<Question> questionList;
+    @ToString.Exclude
+    private List<Question> questionList = new ArrayList<>();
+
+
 
 }

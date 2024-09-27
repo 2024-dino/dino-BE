@@ -1,6 +1,7 @@
 package khu.dino.question.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,7 +35,7 @@ public class QuestionApi {
     @Operation(summary="캘린더 불러오기", description = "특정 년-월에 해당하는 각 날짜 별 이벤트 내역을 반환")
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/calendar")
-    public CommonResponse<List<QuestionResponseDto.CalendarEvent>> getCalendarEvent(@AuthMember PrincipalDetails principalDetails, @RequestParam(required = true, name = "date") String requestMonth) {
+    public CommonResponse<List<QuestionResponseDto.CalendarEvent>> getCalendarEvent(@AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails, @RequestParam(required = true, name = "date") String requestMonth) {
         return CommonResponse.onSuccess(questionService.getCalendarEvent(principalDetails, requestMonth));
     }
 

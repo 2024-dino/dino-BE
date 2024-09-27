@@ -16,7 +16,7 @@ public class QuestionQueryAdapter {
     private final QuestionRepository questionRepository;
 
     public List<Question> occurredAtBetweenStartDateAndEndDate(PrincipalDetails principalDetails, LocalDate startDate, LocalDate endDate) {
-        Specification<Question> spec = QuestionSpecification.occurredAtBetweenStartDateAndEndDate(principalDetails.getId(),startDate, endDate);
+        Specification<Question> spec = QuestionSpecification.occurredAtBetweenStartDateAndEndDate(principalDetails.getMember().getId(),startDate, endDate);
         return questionRepository.findAll(spec);
     }
 }

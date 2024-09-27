@@ -15,6 +15,6 @@ public class EventQueryAdapter {
     private final EventRepository eventRepository;
 
     public List<Event> findMainEvent(PrincipalDetails principalDetails) {
-        return eventRepository.findAllByCreatorIdAndEventStatus(principalDetails.getId(), Status.EXECUTION);
+        return eventRepository.findAllByCreatorIdAndEventStatus(principalDetails.getMember().getId(), Status.EXECUTION);
     }
 }

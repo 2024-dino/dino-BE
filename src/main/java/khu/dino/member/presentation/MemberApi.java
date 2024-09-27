@@ -1,6 +1,7 @@
 package khu.dino.member.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,8 +36,7 @@ public class MemberApi {
     @Operation(summary="JWT 유효성 확인 및 기본 유저 정보 반환", description = "JWT 유효성 확인 및 기본 유저 정보 반환")
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/validation-jwt")
-    public CommonResponse<MemberResponseDto.MemberResponse> validateJwt(@AuthMember PrincipalDetails principalDetails) throws ServletException, IOException {
-       log.info(principalDetails.toString());
+    public CommonResponse<MemberResponseDto.MemberResponse> validateJwt(@AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails) throws ServletException, IOException {
         return CommonResponse.onSuccess(memberService.validateJwt(principalDetails));
     }
 
