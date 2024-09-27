@@ -2,6 +2,8 @@ package khu.dino.event.implement;
 
 import khu.dino.common.annotation.Adapter;
 import khu.dino.common.auth.PrincipalDetails;
+import khu.dino.common.exception.ErrCode;
+import khu.dino.common.exception.event.EventException;
 import khu.dino.event.persistence.Event;
 import khu.dino.event.persistence.enums.Status;
 import khu.dino.event.persistence.repository.EventRepository;
@@ -16,5 +18,9 @@ public class EventQueryAdapter {
 
     public List<Event> findMainEvent(PrincipalDetails principalDetails) {
         return eventRepository.findAllByCreatorIdAndEventStatus(principalDetails.getMember().getId(), Status.EXECUTION);
+    }
+
+    public Event findById(Long eventId){
+        return eventRepository.findById(eventId).orElseThrow(() -> new EventException(ErrCode.EVENT_NOT_FOUND.getMessage()));
     }
 }
