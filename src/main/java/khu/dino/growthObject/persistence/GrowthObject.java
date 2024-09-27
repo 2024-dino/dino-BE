@@ -1,6 +1,7 @@
 package khu.dino.growthObject.persistence;
 
 import jakarta.persistence.*;
+import khu.dino.event.persistence.enums.Emotion;
 import khu.dino.growthObject.persistence.enums.Category;
 import lombok.*;
 
@@ -21,4 +22,6 @@ public class GrowthObject {
     private String fileUrl;
 
     private String fileName;
+
+    private Emotion emotion;
 }

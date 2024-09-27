@@ -4,9 +4,11 @@ import jakarta.persistence.*;
 import khu.dino.answer.persistence.Answer;
 import khu.dino.common.base.BaseEntity;
 import khu.dino.event.persistence.Event;
+import khu.dino.member.persistence.Member;
 import lombok.*;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @ToString(callSuper = true)
@@ -27,7 +29,15 @@ public class Question extends BaseEntity {
     @JoinColumn(name = "event_id")
     private Event event;
 
-    @OneToMany(mappedBy = "question")
-    private List<Answer> answerList;
+    @OneToOne(mappedBy = "question")
+    private Answer answer;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member owner;
+
+    private Boolean isPriority;
+    private LocalDate occurredAt;
 
 }

@@ -101,7 +101,7 @@ public class OpenAIApi {
 
         LocalDate currentPushDate = startDate.plusDays(1);  // 첫날은 제외하고 시작
         for (int i = 0; i < result.size()-1; i++) {
-            pushDates.add(currentPushDate.plusDays(Math.round( interval * i)).isEqual(endDate) ? endDate.minusDays(1) : currentPushDate.plusDays(Math.round( interval * i))  ); //우선 담고 보자.
+            pushDates.add(currentPushDate.plusDays(Math.round(interval * i)).isEqual(endDate) ? endDate.minusDays(1) : currentPushDate.plusDays(Math.round( interval * i))  ); //우선 담고 보자.
         }
         pushDates.add(endDate);
         for(int i = 0; i < result.size(); i++){

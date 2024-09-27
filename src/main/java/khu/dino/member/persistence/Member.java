@@ -10,7 +10,9 @@ import khu.dino.member.persistence.enums.OAuth2Provider;
 import khu.dino.member.persistence.enums.UserRole;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -20,7 +22,7 @@ import java.util.List;
 @Entity
 @Table(name = "member")
 @Builder
-public class Member extends BaseEntity  {
+public  class Member extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -46,7 +48,8 @@ public class Member extends BaseEntity  {
     private UserRole userRole = UserRole.ROLE_USER;
 
     @OneToMany(mappedBy = "creator")
-    private List<Event> eventList;
+    @ToString.Exclude
+    private List<Event> eventList = new ArrayList<>();
 
 
 }
