@@ -10,8 +10,10 @@ import khu.dino.growthObject.persistence.enums.Category;
 import khu.dino.member.persistence.Member;
 import khu.dino.question.persistence.Question;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -31,28 +33,34 @@ public class Event extends BaseEntity {
 
     private String title;
 
-    @Enumerated(EnumType.STRING)
-    private Category category;
+//    @Enumerated(EnumType.STRING)
+//    private Category category;
 
     private String memo;
 
     @DateTimeFormat(pattern = "HH:mm")
     private LocalTime occurrenceTime;
 
-    private LocalDateTime startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
 
-    private LocalDateTime endDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDate;
 
+    @ColumnDefault(value = "false")
     private boolean isDeleted;
 
-    @Enumerated(EnumType.STRING)
-    private Step step;
+//    @Enumerated(EnumType.STRING)
+//    private Step step;
 
     @Enumerated(EnumType.STRING)
+    @ColumnDefault(value = "EXECUTION")
     private Status eventStatus;
 
     @Enumerated(EnumType.STRING)
     private Emotion emotion;
+
+    private Long totalQuestionCount;
 
     @OneToOne
     @JoinColumn(name = "representative_question_id")
@@ -65,6 +73,7 @@ public class Event extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_id")
     private Member creator;
+
 
     @OneToMany(mappedBy = "event")
     private List<Question> questionList;
