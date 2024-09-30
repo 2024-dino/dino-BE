@@ -52,4 +52,8 @@ public  class Member extends BaseEntity {
     private List<Event> eventList = new ArrayList<>();
 
 
+    public void ChangeNickname(String nickname){
+        this.nickname = nickname;
+    }
+
 }

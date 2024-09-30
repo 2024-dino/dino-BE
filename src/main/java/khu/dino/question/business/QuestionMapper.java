@@ -20,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuestionMapper {
 
+
     public static List<Question> createQuestionDtoListToQuestionList(List<QuestionRequestDto.questionSimpleInfoDto> questionInfoList, Event event, Member member){
         List<Question> questionList = new ArrayList<>();
 
@@ -39,53 +40,25 @@ public class QuestionMapper {
                 .build();
     }
 
-    public QuestionResponseDto.questionContent toQuestionContent(Question question, Integer sequence) {
+
+    public QuestionResponseDto.QuestionContent toQuestionContent(Question question) {
+
         if(question.getAnswer() == null) {
-             return QuestionResponseDto.questionContent.builder()
+             return QuestionResponseDto.QuestionContent.builder()
                      .questionId(question.getId())
                      .content(question.getContent())
                      .questionDate(question.getOccurredAt())
-                     .sequence(sequence)
                      .isAnswer(false)
                      .build();
         }else{
-            return  QuestionResponseDto.questionContent.builder()
+            return  QuestionResponseDto.QuestionContent.builder()
                     .questionId(question.getId())
                     .content(question.getContent())
                     .questionDate(question.getOccurredAt())
-                    .type(question.getAnswer().getType())
                     .isAnswer(true)
                     .myAnswer(question.getAnswer().getContent())
                     .fileUrl(question.getAnswer().getFileUrl())
-                    .sequence(sequence)
-                    .build();
-        }
-    }
-
-    public QuestionResponseDto.EventContent toEventContent(Question question) {
-        if(question.getAnswer() == null) {
-            return QuestionResponseDto.EventContent.builder()
-                    .eventId(question.getEvent().getId())
-                    .title(question.getEvent().getTitle())
-                    .emotion(question.getEvent().getEmotion())
-                    .eventStatus(question.getEvent().getEventStatus())
-                    .questionId(question.getId())
-                    .content(question.getContent())
-                    .isAnswer(false)
-                    .build();
-        }else{
-            return  QuestionResponseDto.EventContent.builder()
-                    .eventId(question.getEvent().getId())
-                    .title(question.getEvent().getTitle())
-                    .emotion(question.getEvent().getEmotion())
-                    .eventStatus(question.getEvent().getEventStatus())
-                    .questionId(question.getId())
-                    .content(question.getContent())
-                    .isAnswer(true)
-                    .isPriority(question.getIsPriority())
-                    .fileUrl(question.getAnswer().getFileUrl())
                     .type(question.getAnswer().getType())
-                    .myAnswer(question.getAnswer().getContent())
                     .build();
         }
     }

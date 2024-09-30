@@ -5,11 +5,10 @@ import khu.dino.answer.persistence.enums.Type;
 import khu.dino.common.enums.Step;
 import khu.dino.event.persistence.enums.Emotion;
 import khu.dino.event.persistence.enums.Status;
-import khu.dino.growthObject.persistence.enums.Category;
+import khu.dino.event.presentation.dto.EventResponseDto;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +18,9 @@ public class QuestionResponseDto {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class questionContent {
+    public static class QuestionContent {
         @Builder.Default
         Long questionId = 0L;
-        @Builder.Default
-        Integer sequence = 0;
         @Builder.Default
         String content = null;
         @Builder.Default
@@ -49,10 +46,12 @@ public class QuestionResponseDto {
     public static class CalendarEvent{
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-        private LocalDate eventDate;
+        private String eventDate;
         @Builder.Default
-        List<EventContent> eventContent = new ArrayList<>();
+        List<EventResponseDto.EventContent> eventContent = new ArrayList<>();
     }
+
+
 
 
     @Builder
@@ -60,32 +59,10 @@ public class QuestionResponseDto {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class EventContent {
+    public static  class PriorityQuestion {
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM")
+        private String groupByDate;
         @Builder.Default
-        private Long eventId = 0L;
-        @Builder.Default
-        private String title = null;
-        @Builder.Default
-        private Step step = null;
-        @Builder.Default
-        private Emotion emotion = null;
-        @Builder.Default
-        private Status eventStatus = null;
-        @Builder.Default
-        private Long questionId = 0L;
-        @Builder.Default
-        private String content = "";
-        @Builder.Default
-        private Boolean isAnswer = false;
-        @Builder.Default
-        private String myAnswer = null;
-        @Builder.Default
-        private Boolean isPriority = false;
-        @Builder.Default
-        private String fileUrl = null;
-        @Builder.Default
-        private Type type = null;
+        List<QuestionContent> questionContent = new ArrayList<>();
     }
-
-
 }
