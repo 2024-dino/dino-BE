@@ -3,15 +3,18 @@ package khu.dino.common.util;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import khu.dino.answer.persistence.Answer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.UUID;
 
 @Slf4j
@@ -24,20 +27,26 @@ public class AwsS3Util {
     private final AmazonS3Client amazonS3Client;
 
 
-    public String uploadGrowthObject(Long userId, ByteArrayOutputStream byteArrayOutputStream) throws Exception {
-        //추후 확장자 명 변경 필요
-        String generateFileName = UUID.randomUUID().toString().substring(0,8) + ".png";
-        String filename = userId + File.separator +  generateFileName;
+    public String uploadAnswerObject(String username, MultipartFile object,Long eventId, Long QuewsionId, Long AwnserId) throws Exception {
 
-        byte[] qrCodeBytes = byteArrayOutputStream.toByteArray();
+
+        String originalName = object.getOriginalFilename(); //파일 이름 추출
+        String extension = Objects.requireNonNull(originalName).substring(originalName.lastIndexOf(".") + 1);
+        String generateFileName = UUID.randomUUID() + "." + extension;
+        log.info(generateFileName);
+
+
+        String filename = "DayDream" + File.separator + username + File.separator + eventId + File.separator +  QuewsionId + File.separator +  AwnserId + File.separator + generateFileName;
+        log.info(filename);
         ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentType("image/png" + ";charset=utf-8");
+        objectMetadata.setContentType(object.getContentType() + ";charset=utf-8");
         objectMetadata.setContentEncoding("UTF-8");
-        objectMetadata.setContentLength(qrCodeBytes.length);
-        InputStream inputStream = new ByteArrayInputStream(qrCodeBytes);
-        amazonS3Client.putObject(bucket, filename, inputStream, objectMetadata);
+        objectMetadata.setContentLength(object.getInputStream().available());
+
+        amazonS3Client.putObject(bucket, filename, object.getInputStream(), objectMetadata);
         log.info(amazonS3Client.getUrl(bucket, filename).toString());
         return amazonS3Client.getUrl(bucket, filename).toString();
+
 
     }
 
