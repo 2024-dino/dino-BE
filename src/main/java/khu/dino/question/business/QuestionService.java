@@ -1,14 +1,15 @@
 package khu.dino.question.business;
 
+import khu.dino.answer.presentation.dto.AnswerResponseDto;
 import khu.dino.common.auth.PrincipalDetails;
+import khu.dino.event.implement.EventQueryAdapter;
+import khu.dino.event.persistence.Event;
+import khu.dino.member.persistence.Member;
 import khu.dino.question.implement.QuestionQueryAdapter;
-import khu.dino.question.implement.QuestionSpecification;
 import khu.dino.question.persistence.Question;
-import khu.dino.question.persistence.repository.QuestionRepository;
 import khu.dino.question.presentation.dto.QuestionResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ public class QuestionService {
     private final QuestionQueryAdapter questionQueryAdapter;
 
     private final QuestionMapper questionMapper;
+    private final EventQueryAdapter eventQueryAdapter;
 
     public List<QuestionResponseDto.CalendarEvent> getCalendarEvent(PrincipalDetails principalDetails, String requestMonth) {
         YearMonth yearMonth = YearMonth.parse(requestMonth);
@@ -45,5 +47,14 @@ public class QuestionService {
                 .eventContent(entry.getValue())
                 .build())
                 .collect(Collectors.toList());
+    }
+
+    public List<AnswerResponseDto.questionAndAnswerDto> getQuestionAndAnswerList(PrincipalDetails principalDetails, Long eventId){
+        Member member = principalDetails.getMember();
+        Event event = eventQueryAdapter.findById(eventId);
+
+        List<Question> questionList = questionQueryAdapter.findByMemberAndEvent(member, event);
+
+        return QuestionMapper.questionListToQuestionAndAnswerDtoList(questionList);
     }
 }

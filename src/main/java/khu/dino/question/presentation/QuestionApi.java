@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import khu.dino.answer.presentation.dto.AnswerResponseDto;
 import khu.dino.common.CommonResponse;
 import khu.dino.common.annotation.AuthMember;
 import khu.dino.common.auth.PrincipalDetails;
@@ -13,10 +14,7 @@ import khu.dino.question.presentation.dto.QuestionResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,6 +35,15 @@ public class QuestionApi {
     @GetMapping("/calendar")
     public CommonResponse<List<QuestionResponseDto.CalendarEvent>> getCalendarEvent(@AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails, @RequestParam(required = true, name = "date") String requestMonth) {
         return CommonResponse.onSuccess(questionService.getCalendarEvent(principalDetails, requestMonth));
+    }
+
+    @Operation(summary="[대표 질문 선택 페이지] 특정 이벤트의 질문/답변 목록 조회 API", description = "특정 이벤트의 질문/답변 목록을 조회하는 API 입니다.")
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{eventId}")
+    public CommonResponse<List<AnswerResponseDto.questionAndAnswerDto>> getQuestionAndAnswerList(
+            @AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails,
+            @PathVariable(name = "eventId") Long eventId){
+            return CommonResponse.onSuccess(questionService.getQuestionAndAnswerList(principalDetails, eventId));
     }
 
 }

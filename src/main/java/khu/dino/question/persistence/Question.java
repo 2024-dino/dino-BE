@@ -33,6 +33,7 @@ public class Question extends BaseEntity {
     @OneToOne(mappedBy = "question")
     private Answer answer;
 
+    private boolean isAnswered = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

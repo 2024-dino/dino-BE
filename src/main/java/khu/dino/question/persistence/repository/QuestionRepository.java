@@ -11,7 +11,6 @@ import java.util.List;
 
 public interface QuestionRepository extends JpaRepository<Question, Long>, JpaSpecificationExecutor<Question>{
 
-
-
+    List<Question> findByOwnerAndEvent(Member owner, Event event);
 
 }
