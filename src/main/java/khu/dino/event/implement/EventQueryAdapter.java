@@ -7,7 +7,9 @@ import khu.dino.common.exception.event.EventException;
 import khu.dino.event.persistence.Event;
 import khu.dino.event.persistence.enums.Status;
 import khu.dino.event.persistence.repository.EventRepository;
+import khu.dino.member.persistence.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
@@ -23,4 +25,10 @@ public class EventQueryAdapter {
     public Event findById(Long eventId){
         return eventRepository.findById(eventId).orElseThrow(() -> new EventException(ErrCode.EVENT_NOT_FOUND.getMessage()));
     }
+
+    public List<Event> findAllByOwnerIdAndStatus(Long ownerId, Status status) {
+        Specification<Event> eventSpecification = EventSpecification.findAllByOwnerIdAndStatus(ownerId, status);
+        return eventRepository.findAll(eventSpecification);
+    }
+
 }
