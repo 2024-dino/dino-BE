@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,7 +45,11 @@ public class QuestionService {
                             Collectors.toList())
                 ));
 
-        return groupedQuestions.entrySet().stream().map(entry -> QuestionResponseDto.CalendarEvent.builder()
+        return groupedQuestions.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey()) //오름차순
+//                .sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())) //내림차순
+                .map(entry -> QuestionResponseDto.CalendarEvent.builder()
+
                 .eventDate(entry.getKey().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .eventContent(entry.getValue())
                 .build())

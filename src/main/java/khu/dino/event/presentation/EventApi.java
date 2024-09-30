@@ -90,11 +90,11 @@ public class EventApi {
 
 
 
-    @Operation(summary = "완성한/진행중 내역 반환", description = "수정필요")
+    @Operation(summary = "완성한/진행중 내역 반환", description = "완료/진행중인 이벤트 내역을 반환하는 API입니다.")
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/")
+    @GetMapping("")
     public CommonResponse<List<EventResponseDto.EventInfo>> getEvents(@RequestParam(name ="event-status") String eventStatus, @AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails) {
-        return CommonResponse.onSuccess(eventService.getEvents(Status.valueOf(eventStatus), principalDetails.getMember()));
+        return CommonResponse.onSuccess(eventService.getEvents(eventStatus, principalDetails.getMember()));
     }
 
 

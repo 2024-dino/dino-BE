@@ -24,7 +24,7 @@ public class QuestionQueryAdapter {
     }
 
     public List<Question> getHiStoryQuestion(PrincipalDetails principalDetails) {
-        return questionRepository.findAllByOwnerAndIsPriorityIsTrueOrderByOccurredAtDesc(principalDetails.getMember());
+        return questionRepository.findAllByOwnerAndIsPriorityIsTrueOrderByOccurredAtAsc(principalDetails.getMember());
     }
 
     public Question getQuestionByIdAndOwner(Long questionId, Member member) {

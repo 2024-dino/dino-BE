@@ -132,8 +132,8 @@ public class EventResponseDto {
         private Long eventId = 0L;
         @Builder.Default
         private String title = null;
-        @Builder.Default
-        private Step step = null;
+//        @Builder.Default
+//        private Step step = null;
         @Builder.Default
         private Emotion emotion = null;
         @Builder.Default

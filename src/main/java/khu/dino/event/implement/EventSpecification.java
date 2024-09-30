@@ -17,8 +17,8 @@ public class EventSpecification {
 
 
             return criteriaBuilder.and(
-                    criteriaBuilder.equal(root.get("status"), status),
-                    criteriaBuilder.equal(root.get("owner").get("id"), ownerId)
+                    criteriaBuilder.equal(root.get("eventStatus"), status),
+                    criteriaBuilder.equal(root.get("creator").get("id"), ownerId)
             );
         };
     }

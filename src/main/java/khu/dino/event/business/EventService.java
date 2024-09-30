@@ -76,8 +76,10 @@ public class EventService {
         eventCommandAdapter.update(event, request);
     }
 
-    public List<EventResponseDto.EventInfo> getEvents(Status status, Member member) {
-        List<Event> eventList = eventQueryAdapter.findAllByOwnerIdAndStatus(member.getId(), status);
+    public List<EventResponseDto.EventInfo> getEvents(String status, Member member) {
+
+        log.info(status.equals(Status.EXECUTION.name()) ? "진행중인 이벤트 조회" : "완료된 이벤트 조회");
+        List<Event> eventList = eventQueryAdapter.findAllByOwnerIdAndStatus(member.getId(), status.equals(Status.EXECUTION.toString()) ? Status.EXECUTION : Status.TERMINATION);
 
 
         return eventList.stream()

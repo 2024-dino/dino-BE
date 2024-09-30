@@ -43,19 +43,19 @@ public class QuestionMapper {
 
     public QuestionResponseDto.QuestionContent toQuestionContent(Question question) {
 
-        if(question.getAnswer() == null) {
+        if(!question.getIsAnswered()) {
              return QuestionResponseDto.QuestionContent.builder()
                      .questionId(question.getId())
                      .content(question.getContent())
                      .questionDate(question.getOccurredAt())
-                     .isAnswer(false)
+                     .isAnswer(question.getIsAnswered())
                      .build();
         }else{
             return  QuestionResponseDto.QuestionContent.builder()
                     .questionId(question.getId())
                     .content(question.getContent())
                     .questionDate(question.getOccurredAt())
-                    .isAnswer(true)
+                    .isAnswer(question.getIsAnswered())
                     .myAnswer(question.getAnswer().getContent())
                     .fileUrl(question.getAnswer().getFileUrl())
                     .type(question.getAnswer().getType())

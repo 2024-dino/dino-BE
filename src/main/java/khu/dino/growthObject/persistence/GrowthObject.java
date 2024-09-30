@@ -23,5 +23,6 @@ public class GrowthObject {
 
     private String fileName;
 
+    @Enumerated(EnumType.STRING)
     private Emotion emotion;
 }

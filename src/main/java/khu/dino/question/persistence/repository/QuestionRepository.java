@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface QuestionRepository extends JpaRepository<Question, Long>, JpaSpecificationExecutor<Question>{
 
-    List<Question> findAllByOwnerAndIsPriorityIsTrueOrderByOccurredAtDesc(Member member);
+    List<Question> findAllByOwnerAndIsPriorityIsTrueOrderByOccurredAtAsc(Member member);
 
     Optional<Question> findQuestionByIdAndOwner(Long questionId, Member owner );
 
