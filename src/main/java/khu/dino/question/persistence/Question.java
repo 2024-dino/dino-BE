@@ -43,4 +43,8 @@ public class Question extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate occurredAt;
 
+
+    public void updatePriorityStatus(Boolean isPriority) {
+        this.isPriority = isPriority;
+    }
 }

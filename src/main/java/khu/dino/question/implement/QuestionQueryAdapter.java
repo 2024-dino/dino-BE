@@ -2,6 +2,9 @@ package khu.dino.question.implement;
 
 import khu.dino.common.annotation.Adapter;
 import khu.dino.common.auth.PrincipalDetails;
+import khu.dino.common.exception.ErrCode;
+import khu.dino.common.exception.question.QuestionException;
+import khu.dino.member.persistence.Member;
 import khu.dino.question.persistence.Question;
 import khu.dino.question.persistence.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,5 +21,13 @@ public class QuestionQueryAdapter {
     public List<Question> occurredAtBetweenStartDateAndEndDate(PrincipalDetails principalDetails, LocalDate startDate, LocalDate endDate) {
         Specification<Question> spec = QuestionSpecification.occurredAtBetweenStartDateAndEndDate(principalDetails.getMember().getId(),startDate, endDate);
         return questionRepository.findAll(spec);
+    }
+
+    public List<Question> getHiStoryQuestion(PrincipalDetails principalDetails) {
+        return questionRepository.findAllByOwnerAndIsPriorityIsTrueOrderByOccurredAtDesc(principalDetails.getMember());
+    }
+
+    public Question getQuestionByIdAndOwner(Long questionId, Member member) {
+        return questionRepository.findQuestionByIdAndOwner(questionId, member).orElseThrow( () -> new QuestionException(ErrCode.QUESTION_NOT_FOUND.getMessage()));
     }
 }
