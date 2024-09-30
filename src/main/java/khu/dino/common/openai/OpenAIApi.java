@@ -1,13 +1,12 @@
-package khu.dino.openai.presentation;
+package khu.dino.common.openai;
 
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import khu.dino.common.scheduler.PushNotificationScheduler;
-import khu.dino.openai.OpenAIFeignClient;
-import khu.dino.openai.presentation.dto.OpenAIRequestDto;
-import khu.dino.openai.presentation.dto.OpenAIResponseDto;
+import khu.dino.common.openai.dto.OpenAIRequestDto;
+import khu.dino.common.openai.dto.OpenAIResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -109,7 +108,7 @@ public class OpenAIApi {
         }
 
         //비동기 적으로 실행됨
-        pushNotificationScheduler.schedulePushNotification(pushDates);
+//        pushNotificationScheduler.schedulePushNotification(pushDates);
 
         return ResponseEntity.ok(result);
 

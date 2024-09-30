@@ -33,11 +33,14 @@ public class EventApi {
 
 
     @PostMapping("/")
-    @Operation(summary = "새 이벤트 등록", description = "새로운 이벤트를 등록하는 API 입니다.")
-    public CommonResponse<Long> createEvent(
+    @Operation(summary = "새로운 이벤트 생성하기", description = "새로운 이벤트를 생성하는 API 입니다.")
+    public CommonResponse<?> createEvent (
             @AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails,
-            @RequestBody final EventRequestDto.saveEventDto request) {
-        return CommonResponse.onSuccess(eventService.saveNewEvent(principalDetails.getMember(), request));
+            @RequestBody final EventRequestDto.saveEventDto request) throws Exception{
+
+        eventService.saveNewEvent(principalDetails.getMember(), request);
+
+        return CommonResponse.onSuccess(null);
     }
 
 

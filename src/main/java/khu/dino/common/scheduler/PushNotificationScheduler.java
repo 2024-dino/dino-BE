@@ -22,25 +22,25 @@ public class PushNotificationScheduler {
 
 
     @Async
-    public void schedulePushNotification(List<LocalDate> pushDates) throws SchedulerException {
+    public void schedulePushNotification(List<LocalDate> pushDates, LocalTime occurrenceTime, Long memberId, Long eventId ) throws SchedulerException {
         // 푸시 알림 스케줄링
         Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
         scheduler.start();
 
         for(LocalDate pushDate : pushDates) {
-            LocalDateTime pushDateTime = pushDate.atTime(LocalTime.of(12, 0));
-            Date triggerDate = Date.from(pushDateTime.atZone(ZoneId.systemDefault()).toInstant());
+            LocalDateTime pushDateTime = pushDate.atTime(LocalTime.of(occurrenceTime.getHour(), occurrenceTime.getMinute()));
+            Date triggerTime = Date.from(pushDateTime.atZone(ZoneId.systemDefault()).toInstant());
 
             // JobDetail 생성
             JobDetail job = JobBuilder.newJob(PushNotificationJob.class)
-                    .withIdentity("job_" + pushDateTime, "test1") //여기에 사용자 ID_이벤트 ID로 구성
+                    .withIdentity("job_" + pushDateTime, memberId+"_"+eventId) // job 의 id 값을 사용자 ID_이벤트 ID로 구성
                     .usingJobData("pushDateTime", pushDateTime.toString())  // PushNotificationJob에서 사용할 데이터
                     .build();
 
             // Trigger 생성
             Trigger trigger = TriggerBuilder.newTrigger()
-                    .withIdentity("trigger_" + pushDateTime, "test1")
-                    .startAt(triggerDate)  // 실행 시간을 설정
+                    .withIdentity("trigger_" + pushDateTime, memberId+"_"+eventId) // trigger 의 id 값을 사용자 ID_이벤트 ID로 구성
+                    .startAt(triggerTime)  // 실행 시간을 설정
 //                    .startAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).plusSeconds(10).toInstant()))
 //                    .withSchedule(SimpleScheduleBuilder.simpleSchedule()
 //                            .withMisfireHandlingInstructionFireNow())  // 스케줄이 지났을 경우 즉시 실행

@@ -1,10 +1,9 @@
-package khu.dino.openai;
+package khu.dino.common.openai;
 
 
-import io.swagger.v3.oas.annotations.Operation;
 import khu.dino.common.config.OpenAIFeignConfig;
-import khu.dino.openai.presentation.dto.OpenAIRequestDto;
-import khu.dino.openai.presentation.dto.OpenAIResponseDto;
+import khu.dino.common.openai.dto.OpenAIRequestDto;
+import khu.dino.common.openai.dto.OpenAIResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

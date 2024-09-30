@@ -21,8 +21,6 @@ public class EventRequestDto {
     @Getter
     public static class saveEventDto{
         private String title;
-//        @Enumerated(EnumType.STRING)
-//        private Category category;
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -33,6 +31,7 @@ public class EventRequestDto {
         private LocalDate endDate;
 
         private String memo;
+
         @Schema(type = "string", example = "14:30")
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
         @DateTimeFormat(pattern = "HH:mm")

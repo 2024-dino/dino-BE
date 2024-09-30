@@ -1,4 +1,4 @@
-package khu.dino.openai.presentation.dto;
+package khu.dino.common.openai.dto;
 
 
 import lombok.*;

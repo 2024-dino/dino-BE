@@ -1,7 +1,12 @@
-package khu.dino.openai.presentation.dto;
+package khu.dino.common.openai.dto;
 
 import lombok.*;
+import org.quartz.SchedulerException;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
