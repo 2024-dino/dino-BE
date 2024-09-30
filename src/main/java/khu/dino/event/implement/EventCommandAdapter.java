@@ -11,8 +11,8 @@ import lombok.RequiredArgsConstructor;
 public class EventCommandAdapter {
     private final EventRepository eventRepository;
 
-    public Long save(Event event) {
-        return eventRepository.save(event).getId();
+    public Event save(Event event) {
+        return eventRepository.save(event);
     }
 
     public void update(Event event, EventRequestDto.modifyEventInfoDto request) {

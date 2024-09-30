@@ -2,26 +2,15 @@ package khu.dino.common.openai.dto;
 
 import lombok.*;
 import org.quartz.SchedulerException;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class OpenAIRequestDto {
-
-    @Getter
-    @Setter
-    @Builder
-    @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    @AllArgsConstructor(access = AccessLevel.PROTECTED)
-    @ToString
-    public static class createQuestionDto{
-        String eventTitle;
-        String emotion;
-        String description;
-        Integer questionSize;
-
-    }
 
     @Getter
     @Setter

@@ -2,6 +2,9 @@ package khu.dino.member.implement;
 
 import khu.dino.common.annotation.Adapter;
 import khu.dino.common.auth.PrincipalDetails;
+import khu.dino.common.exception.ErrCode;
+import khu.dino.common.exception.event.EventException;
+import khu.dino.common.exception.member.MemberException;
 import khu.dino.member.persistence.Member;
 import khu.dino.member.persistence.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +16,7 @@ public class MemberQueryAdapter {
     private final MemberRepository memberRepository;
 
     public Member findById(Long id){
-        return memberRepository.findById(id).get();
+        return memberRepository.findById(id).orElseThrow(() -> new MemberException(ErrCode.EVENT_NOT_FOUND.getMessage()));
     }
 
     public PrincipalDetails loadUserByUsername(String username) throws UsernameNotFoundException {

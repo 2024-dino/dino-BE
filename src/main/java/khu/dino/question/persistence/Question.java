@@ -6,6 +6,7 @@ import khu.dino.common.base.BaseEntity;
 import khu.dino.event.persistence.Event;
 import khu.dino.member.persistence.Member;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -38,6 +39,8 @@ public class Question extends BaseEntity {
     private Member owner;
 
     private Boolean isPriority;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate occurredAt;
 
 }

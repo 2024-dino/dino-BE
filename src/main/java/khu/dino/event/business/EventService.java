@@ -1,6 +1,7 @@
 package khu.dino.event.business;
 
 import khu.dino.common.auth.PrincipalDetails;
+import khu.dino.common.openai.OpenAIUtil;
 import khu.dino.event.implement.EventCommandAdapter;
 import khu.dino.event.implement.EventQueryAdapter;
 import khu.dino.event.presentation.dto.EventRequestDto;
@@ -8,6 +9,8 @@ import khu.dino.member.persistence.Member;
 import khu.dino.event.persistence.Event;
 import khu.dino.event.presentation.dto.EventResponseDto;
 import khu.dino.question.business.QuestionMapper;
+import khu.dino.question.implement.QuestionCommandAdapter;
+import khu.dino.question.presentation.dto.QuestionRequestDto;
 import khu.dino.question.presentation.dto.QuestionResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +27,25 @@ public class EventService {
 
     private final EventCommandAdapter eventCommandAdapter;
     private final EventQueryAdapter eventQueryAdapter;
+    private final QuestionCommandAdapter questionCommandAdapter;
 
     private final EventMapper eventMapper;
     private final QuestionMapper questionMapper;
+    private final OpenAIUtil openAIUtil;
 
     @Transactional(readOnly = false)
-    public Long saveNewEvent(Member member, EventRequestDto.saveEventDto request){
+    public void saveNewEvent(Member member, EventRequestDto.saveEventDto request) throws Exception {
         log.info(member.toString());
-        return eventCommandAdapter.save(EventMapper.toEvent(member, request));
+
+        // 이벤트 저장
+        Event event = eventCommandAdapter.save(EventMapper.toEvent(member, request));
+
+        // 이벤트에 해당하는 질문 생성 및 푸시 알림 등록
+        List<QuestionRequestDto.questionSimpleInfoDto> questionList = openAIUtil.createQuestionList(request, member, event);
+
+        // 생성된 질문 db에 저장
+        questionCommandAdapter.saveList(QuestionMapper.createQuestionDtoListToQuestionList(questionList, event, member));
+
     }
 
 

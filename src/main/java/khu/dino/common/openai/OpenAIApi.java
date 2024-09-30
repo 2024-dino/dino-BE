@@ -108,7 +108,7 @@ public class OpenAIApi {
         }
 
         //비동기 적으로 실행됨
-        pushNotificationScheduler.schedulePushNotification(pushDates);
+//        pushNotificationScheduler.schedulePushNotification(pushDates);
 
         return ResponseEntity.ok(result);
 
