@@ -10,13 +10,12 @@ import khu.dino.common.CommonResponse;
 import khu.dino.common.annotation.AuthMember;
 import khu.dino.common.auth.PrincipalDetails;
 import khu.dino.member.business.MemberService;
+import khu.dino.member.presentation.dto.MemberRequestDto;
 import khu.dino.member.presentation.dto.MemberResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -40,4 +39,12 @@ public class MemberApi {
         return CommonResponse.onSuccess(memberService.validateJwt(principalDetails));
     }
 
+    @Operation(summary="사용자 이름 변경", description = "기존 사용자의 이름을 변경하는 API입니다.")
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/nickname")
+    public CommonResponse<MemberResponseDto.MemberResponse> changeNickname(@AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails,@RequestBody MemberRequestDto.MemberRequest request) {
+
+        return CommonResponse.onSuccess(memberService.changeNickname(principalDetails, request));
+
+    }
 }

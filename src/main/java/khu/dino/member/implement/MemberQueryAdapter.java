@@ -7,6 +7,8 @@ import khu.dino.common.exception.event.EventException;
 import khu.dino.common.exception.member.MemberException;
 import khu.dino.member.persistence.Member;
 import khu.dino.member.persistence.repository.MemberRepository;
+import khu.dino.member.presentation.dto.MemberRequestDto;
+import khu.dino.member.presentation.dto.MemberResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
