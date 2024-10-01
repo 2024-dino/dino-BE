@@ -55,6 +55,7 @@ public class QuestionMapper {
                     .questionDate(question.getOccurredAt())
                     .isAnswer(question.getIsAnswered())
                     .myAnswer(question.getAnswer().getContent())
+                    .answeredAt(question.getAnswer().getCreatedAt().toLocalDate())
                     .fileUrl(question.getAnswer().getFileUrl())
                     .build();
         }
@@ -77,6 +78,7 @@ public class QuestionMapper {
                     .type(question.getAnswer().getType())
                     .isAnswer(true)
                     .myAnswer(question.getAnswer().getContent())
+                    .answeredAt(question.getAnswer().getCreatedAt().toLocalDate())
                     .fileUrl(question.getAnswer().getFileUrl())
                     .isPriority(question.getIsPriority())
                     .build();
@@ -148,6 +150,7 @@ public class QuestionMapper {
                 .questionContent(question.getContent())
                 .isAnswered(true)
                 .answerContent(question.getAnswer().getContent())
+                .answeredAt(question.getAnswer().getCreatedAt().toLocalDate())
                 .answerFileUrl(question.getAnswer().getFileUrl())
                 .answerFileName(question.getAnswer().getFileName())
                 .build();
