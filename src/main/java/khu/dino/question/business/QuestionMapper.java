@@ -1,10 +1,8 @@
 package khu.dino.question.business;
 
+import khu.dino.answer.presentation.dto.AnswerResponseDto;
 import khu.dino.common.annotation.Mapper;
-import khu.dino.common.openai.dto.OpenAIRequestDto;
-import khu.dino.event.implement.EventQueryAdapter;
 import khu.dino.event.persistence.Event;
-import khu.dino.member.implement.MemberQueryAdapter;
 import khu.dino.member.persistence.Member;
 import khu.dino.question.persistence.Question;
 import khu.dino.question.presentation.dto.QuestionRequestDto;
@@ -58,8 +56,100 @@ public class QuestionMapper {
                     .isAnswer(question.getIsAnswered())
                     .myAnswer(question.getAnswer().getContent())
                     .fileUrl(question.getAnswer().getFileUrl())
+                    .build();
+        }
+    }
+
+    public static QuestionResponseDto.questionContent questionToQuestionContent(Question question) {
+        if(question.getAnswer() == null) {
+            return QuestionResponseDto.questionContent.builder()
+                    .questionId(question.getId())
+                    .content(question.getContent())
+                    .questionDate(question.getOccurredAt())
+                    .isPriority(question.getIsPriority())
+                    .isAnswer(false)
+                    .build();
+        }else{
+            return  QuestionResponseDto.questionContent.builder()
+                    .questionId(question.getId())
+                    .content(question.getContent())
+                    .questionDate(question.getOccurredAt())
+                    .type(question.getAnswer().getType())
+                    .isAnswer(true)
+                    .myAnswer(question.getAnswer().getContent())
+                    .fileUrl(question.getAnswer().getFileUrl())
+                    .isPriority(question.getIsPriority())
+                    .build();
+        }
+    }
+
+    public static List<QuestionResponseDto.questionContent> questionListToQuestionContentList(List<Question> questionList) {
+        List<QuestionResponseDto.questionContent> questionContentList = new ArrayList<>();
+
+        questionList.stream()
+                .map(question -> questionToQuestionContent(question))
+                .forEach(questionContentList::add);
+        return questionContentList;
+    }
+
+
+    public QuestionResponseDto.EventContent toEventContent(Question question) {
+        if(question.getAnswer() == null) {
+            return QuestionResponseDto.EventContent.builder()
+                    .eventId(question.getEvent().getId())
+                    .title(question.getEvent().getTitle())
+                    .emotion(question.getEvent().getEmotion())
+                    .eventStatus(question.getEvent().getEventStatus())
+                    .questionId(question.getId())
+                    .content(question.getContent())
+                    .isAnswer(false)
+                    .build();
+        }else{
+            return  QuestionResponseDto.EventContent.builder()
+                    .eventId(question.getEvent().getId())
+                    .title(question.getEvent().getTitle())
+                    .emotion(question.getEvent().getEmotion())
+                    .eventStatus(question.getEvent().getEventStatus())
+                    .questionId(question.getId())
+                    .content(question.getContent())
+                    .isAnswer(true)
+                    .isPriority(question.getIsPriority())
+                    .fileUrl(question.getAnswer().getFileUrl())
                     .type(question.getAnswer().getType())
                     .build();
         }
+    }
+
+    public static List<AnswerResponseDto.questionAndAnswerDto> questionListToQuestionAndAnswerDtoList(List<Question> questionList) {
+        List<AnswerResponseDto.questionAndAnswerDto> questionAndAnswerDtoList = new ArrayList<>();
+
+        questionList.stream()
+                .map(question -> questionToQuestionAndAnswerDto(question))
+                .forEach(questionAndAnswerDtoList::add);
+
+        return questionAndAnswerDtoList;
+
+    }
+
+    public static AnswerResponseDto.questionAndAnswerDto questionToQuestionAndAnswerDto(Question question) {
+
+        if(!question.isAnswered()) {
+            return AnswerResponseDto.questionAndAnswerDto.builder()
+                    .questionId(question.getId())
+                    .questionContent(question.getContent())
+                    .isAnswered(false)
+                    .answerContent("")
+                    .answerFileUrl("")
+                    .answerFileName("")
+                    .build();
+        }
+        else return AnswerResponseDto.questionAndAnswerDto.builder()
+                .questionId(question.getId())
+                .questionContent(question.getContent())
+                .isAnswered(true)
+                .answerContent(question.getAnswer().getContent())
+                .answerFileUrl(question.getAnswer().getFileUrl())
+                .answerFileName(question.getAnswer().getFileName())
+                .build();
     }
 }

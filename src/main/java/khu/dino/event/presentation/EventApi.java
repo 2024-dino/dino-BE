@@ -58,6 +58,14 @@ public class EventApi {
         return CommonResponse.onSuccess(null);
     }
 
+    @Operation(summary="특정 이벤트 상세 조회 API", description = "특정 이벤트 상세 조회 API 입니다.")
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{eventId}")
+    public CommonResponse<EventResponseDto.eventDetailDto> getMainEvent(@AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails,
+                                                                         @PathVariable(name = "eventId") Long eventId) {
+
+        return CommonResponse.onSuccess(eventService.getEventDetailInfo(principalDetails.getMember(), eventId));
+    }
 
 
 

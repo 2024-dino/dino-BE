@@ -1,7 +1,11 @@
 package khu.dino.question.business;
 
-import khu.dino.common.CommonResponse;
+import khu.dino.answer.presentation.dto.AnswerResponseDto;
 import khu.dino.common.auth.PrincipalDetails;
+import khu.dino.event.implement.EventQueryAdapter;
+import khu.dino.event.persistence.Event;
+import khu.dino.member.persistence.Member;
+import khu.dino.common.CommonResponse;
 import khu.dino.event.business.EventMapper;
 import khu.dino.event.presentation.dto.EventResponseDto;
 import khu.dino.question.implement.QuestionCommandAdapter;
@@ -20,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -28,6 +33,7 @@ public class QuestionService {
     private final QuestionCommandAdapter questionCommandAdapter;
 
     private final QuestionMapper questionMapper;
+    private final EventQueryAdapter eventQueryAdapter;
     private final EventMapper eventMapper;
 
     public List<QuestionResponseDto.CalendarEvent> getCalendarEvent(PrincipalDetails principalDetails, String requestMonth) {
@@ -54,6 +60,15 @@ public class QuestionService {
                 .eventContent(entry.getValue())
                 .build())
                 .collect(Collectors.toList());
+    }
+
+    public List<AnswerResponseDto.questionAndAnswerDto> getQuestionAndAnswerList(PrincipalDetails principalDetails, Long eventId){
+        Member member = principalDetails.getMember();
+        Event event = eventQueryAdapter.findById(eventId);
+
+        List<Question> questionList = questionQueryAdapter.findByMemberAndEvent(member, event);
+
+        return QuestionMapper.questionListToQuestionAndAnswerDtoList(questionList);
     }
 
     public List<QuestionResponseDto.PriorityQuestion> getHiStoryQuestion(PrincipalDetails principalDetails) {

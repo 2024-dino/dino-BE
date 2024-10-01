@@ -21,19 +21,29 @@ public class QuestionResponseDto {
     public static class QuestionContent {
         @Builder.Default
         Long questionId = 0L;
+//        @Builder.Default
+//        Integer sequence = 0;
         @Builder.Default
-        String content = null;
+        LocalDate questionDate = null;
+
         @Builder.Default
         Boolean isAnswer = false;
         @Builder.Default
+        Boolean isPriority = false;
+        @Builder.Default
+        String content = null;
+
+        @Builder.Default
         String myAnswer = null;
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-        @Builder.Default
-        LocalDate questionDate = null;
+
         @Builder.Default
         String fileUrl = null; //답변 파일
         @Builder.Default
         Type type = null;
+
+
+
     }
 
 

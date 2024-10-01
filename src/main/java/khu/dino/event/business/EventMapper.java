@@ -6,11 +6,14 @@ import khu.dino.event.persistence.enums.Status;
 import khu.dino.event.presentation.dto.EventRequestDto;
 import khu.dino.member.persistence.Member;
 import khu.dino.event.presentation.dto.EventResponseDto;
+import khu.dino.question.business.QuestionMapper;
+
 import khu.dino.question.persistence.Question;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 
 @Mapper
@@ -29,6 +32,28 @@ public class EventMapper {
                 .endDate(request.getEndDate())
                 .emotion(request.getEmotion())
                 .totalQuestionCount(request.getQuestionSize())
+                .build();
+    }
+
+    public static EventResponseDto.eventDetailDto toEventDetailDto(Event event, List<Question> questionList) {
+        Long totalQuestionCount = 0L;
+        for(Question question : questionList) {
+            if(question.isAnswered()) totalQuestionCount++;
+        }
+
+        return EventResponseDto.eventDetailDto.builder()
+                .title(event.getTitle())
+                .emotion(event.getEmotion())
+                .eventStatus(event.getEventStatus())
+                .startDate(event.getStartDate().toString())
+                .memo(event.getMemo())
+                .endDate(event.getEndDate().toString())
+                .fileUrl(event.getGrowthObject().getFileUrl())
+                .totalQuestionCount(event.getTotalQuestionCount())
+                .totalAnswerCount(totalQuestionCount)
+                .occurrenceTime(event.getOccurrenceTime())
+                .representativeQuestion(QuestionMapper.questionToQuestionContent(event.getRepresentativeQuestion()))
+                .questionContent(QuestionMapper.questionListToQuestionContentList(questionList))
                 .build();
     }
 

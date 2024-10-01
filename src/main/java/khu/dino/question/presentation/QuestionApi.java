@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import khu.dino.answer.presentation.dto.AnswerResponseDto;
 import khu.dino.common.CommonResponse;
 import khu.dino.common.annotation.AuthMember;
 import khu.dino.common.auth.PrincipalDetails;
@@ -39,14 +40,20 @@ public class QuestionApi {
         return CommonResponse.onSuccess(questionService.getHiStoryQuestion(principalDetails));
     }
 
+    @Operation(summary="[대표 질문 선택 페이지] 특정 이벤트의 질문/답변 목록 조회 API", description = "특정 이벤트의 질문/답변 목록을 조회하는 API 입니다.")
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{eventId}")
+    public CommonResponse<List<AnswerResponseDto.questionAndAnswerDto>> getQuestionAndAnswerList(
+            @AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails,
+            @PathVariable(name = "eventId") Long eventId){
+            return CommonResponse.onSuccess(questionService.getQuestionAndAnswerList(principalDetails, eventId));
+    }
+
     @Operation(summary = "질문 북마크 선택 및 취소하기", description = "질문을 저장하는(북마크)하거나 취소하는 API입니다.")
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/{question-id}/priority")
     public CommonResponse<Void> setQuestionBookmarkStatus(@AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails, @RequestParam(required = true, name="question-id") Long questionId, @RequestParam(required = true, name="priority") Boolean priority) {
         return  CommonResponse.onSuccess(questionService.setQuestionPriorityStatus(principalDetails, questionId, priority));
     }
-
-
-
 
 }

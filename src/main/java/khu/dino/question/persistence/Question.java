@@ -37,6 +37,7 @@ public class Question extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member owner;
+    
     @Builder.Default
     private Boolean isPriority = false;
 

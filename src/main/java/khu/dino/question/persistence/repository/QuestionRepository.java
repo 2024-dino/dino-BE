@@ -12,6 +12,8 @@ import java.util.Optional;
 
 public interface QuestionRepository extends JpaRepository<Question, Long>, JpaSpecificationExecutor<Question>{
 
+    List<Question> findByOwnerAndEvent(Member owner, Event event);
+
     List<Question> findAllByOwnerAndIsPriorityIsTrueOrderByOccurredAtAsc(Member member);
 
     Optional<Question> findQuestionByIdAndOwner(Long questionId, Member owner );
