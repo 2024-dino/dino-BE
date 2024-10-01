@@ -10,6 +10,8 @@ import khu.dino.event.persistence.Event;
 import khu.dino.event.presentation.dto.EventResponseDto;
 import khu.dino.question.business.QuestionMapper;
 import khu.dino.question.implement.QuestionCommandAdapter;
+import khu.dino.question.implement.QuestionQueryAdapter;
+import khu.dino.question.persistence.Question;
 import khu.dino.question.presentation.dto.QuestionRequestDto;
 import khu.dino.question.presentation.dto.QuestionResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class EventService {
 
     private final EventCommandAdapter eventCommandAdapter;
     private final EventQueryAdapter eventQueryAdapter;
+    private final QuestionQueryAdapter questionQueryAdapter;
     private final QuestionCommandAdapter questionCommandAdapter;
 
     private final EventMapper eventMapper;
@@ -46,6 +49,13 @@ public class EventService {
         // 생성된 질문 db에 저장
         questionCommandAdapter.saveList(QuestionMapper.createQuestionDtoListToQuestionList(questionList, event, member));
 
+    }
+
+    public EventResponseDto.eventDetailDto getEventDetailInfo(Member member, Long eventId){
+        Event event = eventQueryAdapter.findById(eventId);
+        List<Question> questionList = questionQueryAdapter.findByMemberAndEvent(member, event);
+
+        return EventMapper.toEventDetailDto(event, questionList);
     }
 
 

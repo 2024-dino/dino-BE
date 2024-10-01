@@ -43,7 +43,7 @@ public class QuestionMapper {
                      .questionId(question.getId())
                      .content(question.getContent())
                      .questionDate(question.getOccurredAt())
-                     .sequence(sequence)
+//                     .sequence(sequence)
                      .isAnswer(false)
                      .build();
         }else{
@@ -55,10 +55,43 @@ public class QuestionMapper {
                     .isAnswer(true)
                     .myAnswer(question.getAnswer().getContent())
                     .fileUrl(question.getAnswer().getFileUrl())
-                    .sequence(sequence)
+//                    .sequence(sequence)
                     .build();
         }
     }
+
+    public static QuestionResponseDto.questionContent questionToQuestionContent(Question question) {
+        if(question.getAnswer() == null) {
+            return QuestionResponseDto.questionContent.builder()
+                    .questionId(question.getId())
+                    .content(question.getContent())
+                    .questionDate(question.getOccurredAt())
+                    .isPriority(question.getIsPriority())
+                    .isAnswer(false)
+                    .build();
+        }else{
+            return  QuestionResponseDto.questionContent.builder()
+                    .questionId(question.getId())
+                    .content(question.getContent())
+                    .questionDate(question.getOccurredAt())
+                    .type(question.getAnswer().getType())
+                    .isAnswer(true)
+                    .myAnswer(question.getAnswer().getContent())
+                    .fileUrl(question.getAnswer().getFileUrl())
+                    .isPriority(question.getIsPriority())
+                    .build();
+        }
+    }
+
+    public static List<QuestionResponseDto.questionContent> questionListToQuestionContentList(List<Question> questionList) {
+        List<QuestionResponseDto.questionContent> questionContentList = new ArrayList<>();
+
+        questionList.stream()
+                .map(question -> questionToQuestionContent(question))
+                .forEach(questionContentList::add);
+        return questionContentList;
+    }
+
 
     public QuestionResponseDto.EventContent toEventContent(Question question) {
         if(question.getAnswer() == null) {

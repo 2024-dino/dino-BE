@@ -13,10 +13,7 @@ import khu.dino.common.auth.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +28,15 @@ import java.util.List;
 @RequestMapping("/api/v1/answer")
 public class AnswerApi {
     private final AnswerService answerService;
+
+//    @Operation(summary="질문에 대한 답변 작성하기 API", description = "특정 질문에 대한 답변을 작성하는 API 입니다.")
+//    @PreAuthorize("isAuthenticated()")
+//    @PostMapping("/{questionId}")
+//    public CommonResponse<?> createAnswer(@AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails,
+//
+//                                          ){
+//
+//        return CommonResponse.onSuccess(null);
+//    }
 
 }
