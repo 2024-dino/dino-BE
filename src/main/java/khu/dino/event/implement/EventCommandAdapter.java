@@ -19,7 +19,7 @@ public class EventCommandAdapter {
         GrowthObject growthObject = growthObjectRepository.findById(1L).get();
         event.setGrowthObject(growthObject);
         return eventRepository.save(event);
-    }git
+    }
     public void update(Event event, EventRequestDto.modifyEventInfoDto request) {
         event.update(request);
     }
