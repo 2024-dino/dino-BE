@@ -35,10 +35,11 @@ public class AwsS3Util {
         String generateFileName = UUID.randomUUID() + "." + extension;
         log.info(generateFileName);
 
-
         String filename = "DayDream" + File.separator + username + File.separator + eventId + File.separator +  QuewsionId + File.separator +  AwnserId + File.separator + generateFileName;
         log.info(filename);
         ObjectMetadata objectMetadata = new ObjectMetadata();
+        log.info(object.getContentType());
+        log.info(MultipartFileUtil.getFileType(object).toString());
         objectMetadata.setContentType(object.getContentType() + ";charset=utf-8");
         objectMetadata.setContentEncoding("UTF-8");
         objectMetadata.setContentLength(object.getInputStream().available());
@@ -46,7 +47,6 @@ public class AwsS3Util {
         amazonS3Client.putObject(bucket, filename, object.getInputStream(), objectMetadata);
         log.info(amazonS3Client.getUrl(bucket, filename).toString());
         return amazonS3Client.getUrl(bucket, filename).toString();
-
 
     }
 
