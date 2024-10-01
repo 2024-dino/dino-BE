@@ -92,4 +92,8 @@ public class Event extends BaseEntity {
         this.representativeQuestion = question;
     }
 
+    public void setGrowthObject(GrowthObject growthObject) {
+        this.growthObject = growthObject;
+    }
+
 }

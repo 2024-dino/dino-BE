@@ -1,9 +1,11 @@
 package khu.dino.growthObject.persistence;
 
 import jakarta.persistence.*;
+import khu.dino.common.enums.Step;
 import khu.dino.event.persistence.enums.Emotion;
 import khu.dino.growthObject.persistence.enums.Category;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @ToString(callSuper = true)
@@ -25,4 +27,8 @@ public class GrowthObject {
 
     @Enumerated(EnumType.STRING)
     private Emotion emotion;
+
+    @Enumerated(EnumType.STRING)
+    @ColumnDefault(value = "LEVEL1")
+    private Step step;
 }

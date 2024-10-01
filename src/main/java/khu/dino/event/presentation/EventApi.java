@@ -36,7 +36,7 @@ public class EventApi {
 
 
 
-    @PostMapping("/")
+    @PostMapping("")
     @Operation(summary = "새로운 이벤트 생성하기", description = "새로운 이벤트를 생성하는 API 입니다.")
     public CommonResponse<?> createEvent (
             @AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails,
