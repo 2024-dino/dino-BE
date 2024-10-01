@@ -66,28 +66,33 @@ public class OpenAIUtil {
         Map<Long, String> result = getStringStringMap(extractJsonData(openAIResponse.getChoices().get(0).getMessage().getContent()));
 
 
-        long totalDays = ChronoUnit.DAYS.between(startDate, endDate);
-        float interval =  (float) totalDays / ( result.size() -2 ); // 이벤트 시작 날, 마지막 날 제외하여 인터벌 생성하도록.
+        long totalDays = ChronoUnit.DAYS.between(startDate.plusDays(1), endDate.minusDays(1));
+        float interval =  (float) totalDays / ( result.size() - 2 ); // 이벤트 시작 날, 마지막 날 제외하여 인터벌 생성하도록.
 
         List<LocalDate> pushDates = new ArrayList<>();
 
-        LocalDate currentPushDate = startDate.plusDays(1);  // 첫날은 제외하고 시작
-        for (int i = 0; i < result.size()-1; i++) {
-            pushDates.add(currentPushDate.plusDays(Math.round(interval * i)).isEqual(endDate) ? endDate.minusDays(1) : currentPushDate.plusDays(Math.round( interval * i))  ); //우선 담고 보자.
+        for (int i = 1; i < result.size()-1; i++) {
+            pushDates.add(startDate.plusDays(Math.round(interval * i)).isEqual(endDate) ? endDate.minusDays(1) : startDate.plusDays(Math.round( interval * i))  ); //우선 담고 보자.
         }
         pushDates.add(endDate);
-        for(int i = 0; i < result.size(); i++){
+        for(int i = 0; i < result.size()-1; i++){
             log.info("질문 내용 : " + result.get((long) i + 1) + ", 질문 발생일: " + pushDates.get(i));
         }
 
         // 특정 이벤트에 대한 Question 리스트 생성하여 db에 저장하는 로직 추가하기
         List<QuestionRequestDto.questionSimpleInfoDto> questionSimpleInfoDtoList = new ArrayList<>();
 
-        for(int i = 0; i < result.size(); i++){
+        questionSimpleInfoDtoList.add(
+                QuestionRequestDto.questionSimpleInfoDto.builder()
+                        .content(result.get(1L)) //첫번째날 질문은 무조건 반환되어야하기에.
+                        .occurredAt(request.getStartDate())
+                        .build()
+        );
+        for(int i = 1; i < result.size(); i++){
             questionSimpleInfoDtoList.add(
             QuestionRequestDto.questionSimpleInfoDto.builder()
                     .content(result.get((long) i + 1))
-                    .occurredAt(pushDates.get(i))
+                    .occurredAt(pushDates.get(i-1))
                     .build()
             );
         }

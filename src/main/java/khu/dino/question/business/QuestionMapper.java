@@ -18,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuestionMapper {
 
+
     public static List<Question> createQuestionDtoListToQuestionList(List<QuestionRequestDto.questionSimpleInfoDto> questionInfoList, Event event, Member member){
         List<Question> questionList = new ArrayList<>();
 
@@ -37,25 +38,24 @@ public class QuestionMapper {
                 .build();
     }
 
-    public QuestionResponseDto.questionContent toQuestionContent(Question question, Integer sequence) {
-        if(question.getAnswer() == null) {
-             return QuestionResponseDto.questionContent.builder()
+
+    public QuestionResponseDto.QuestionContent toQuestionContent(Question question) {
+
+        if(!question.getIsAnswered()) {
+             return QuestionResponseDto.QuestionContent.builder()
                      .questionId(question.getId())
                      .content(question.getContent())
                      .questionDate(question.getOccurredAt())
-//                     .sequence(sequence)
-                     .isAnswer(false)
+                     .isAnswer(question.getIsAnswered())
                      .build();
         }else{
-            return  QuestionResponseDto.questionContent.builder()
+            return  QuestionResponseDto.QuestionContent.builder()
                     .questionId(question.getId())
                     .content(question.getContent())
                     .questionDate(question.getOccurredAt())
-                    .type(question.getAnswer().getType())
-                    .isAnswer(true)
+                    .isAnswer(question.getIsAnswered())
                     .myAnswer(question.getAnswer().getContent())
                     .fileUrl(question.getAnswer().getFileUrl())
-//                    .sequence(sequence)
                     .build();
         }
     }
@@ -116,7 +116,6 @@ public class QuestionMapper {
                     .isPriority(question.getIsPriority())
                     .fileUrl(question.getAnswer().getFileUrl())
                     .type(question.getAnswer().getType())
-                    .myAnswer(question.getAnswer().getContent())
                     .build();
         }
     }

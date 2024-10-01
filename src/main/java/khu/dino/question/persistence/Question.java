@@ -37,12 +37,18 @@ public class Question extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member owner;
+    
     @Builder.Default
-    private boolean isAnswered = false;
-
-    private Boolean isPriority;
+    private Boolean isPriority = false;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate occurredAt;
 
+    @Builder.Default
+    public Boolean isAnswered = false;
+
+
+    public void updatePriorityStatus(Boolean isPriority) {
+        this.isPriority = isPriority;
+    }
 }

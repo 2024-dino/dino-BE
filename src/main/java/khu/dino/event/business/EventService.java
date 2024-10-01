@@ -4,6 +4,7 @@ import khu.dino.common.auth.PrincipalDetails;
 import khu.dino.common.openai.OpenAIUtil;
 import khu.dino.event.implement.EventCommandAdapter;
 import khu.dino.event.implement.EventQueryAdapter;
+import khu.dino.event.persistence.enums.Status;
 import khu.dino.event.presentation.dto.EventRequestDto;
 import khu.dino.member.persistence.Member;
 import khu.dino.event.persistence.Event;
@@ -20,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -62,22 +62,19 @@ public class EventService {
     public List<EventResponseDto.MainEvent> getMainEvent(PrincipalDetails principalDetails) {
         List<Event> eventList = eventQueryAdapter.findMainEvent(principalDetails);
 
-        AtomicReference<Integer> sequence = new AtomicReference<>(1);
 
         return eventList.stream()
                 .map(event -> {
                     EventResponseDto.MainEvent mainEvent = eventMapper.toMainEventList(event);
-                    List<QuestionResponseDto.questionContent> questionContents = event.getQuestionList().stream()
-                            .map(question -> {
-                                return questionMapper.toQuestionContent(question, sequence.getAndSet(sequence.get() + 1));
-                            }).toList();
-                    long isAnswerCount = questionContents.stream()
-                            .filter(QuestionResponseDto.questionContent::getIsAnswer)
+                    List<QuestionResponseDto.QuestionContent> QuestionContents = event.getQuestionList().stream()
+                            .map(questionMapper::toQuestionContent).toList();
+                    long isAnswerCount = QuestionContents.stream()
+                            .filter(QuestionResponseDto.QuestionContent::getIsAnswer)
                             .count();
-                    //Double answerRate = questionContents.isEmpty() ? 0 : ((double) isAnswerCount / questionContents.size()) * 100;
-                    mainEvent.setQuestionContent(questionContents);
+                    //Double answerRate = QuestionContents.isEmpty() ? 0 : ((double) isAnswerCount / QuestionContents.size()) * 100;
+                    mainEvent.setQuestionContent(QuestionContents);
                     mainEvent.setTotalAnswerCount(isAnswerCount);
-                    mainEvent.setTotalQuestionCount((long) questionContents.size());
+                    mainEvent.setTotalQuestionCount((long) QuestionContents.size());
 
                     return mainEvent;
                 }).toList();
@@ -89,4 +86,26 @@ public class EventService {
         eventCommandAdapter.update(event, request);
     }
 
+    public List<EventResponseDto.EventInfo> getEvents(String status, Member member) {
+
+        log.info(status.equals(Status.EXECUTION.name()) ? "진행중인 이벤트 조회" : "완료된 이벤트 조회");
+        List<Event> eventList = eventQueryAdapter.findAllByOwnerIdAndStatus(member.getId(), status.equals(Status.EXECUTION.toString()) ? Status.EXECUTION : Status.TERMINATION);
+
+
+        return eventList.stream()
+                .map(event -> {
+                    EventResponseDto.EventInfo eventInfo = eventMapper.toEventDetail(event);
+                    QuestionResponseDto.QuestionContent representativeQuestion = event.getRepresentativeQuestion() != null ? questionMapper.toQuestionContent(event.getRepresentativeQuestion()) : null;
+                    List<QuestionResponseDto.QuestionContent> QuestionContents = event.getQuestionList().stream()
+                            .map(questionMapper::toQuestionContent).toList();
+                    long isAnswerCount = QuestionContents.stream()
+                            .filter(QuestionResponseDto.QuestionContent::getIsAnswer)
+                            .count();
+                    //Double answerRate = QuestionContents.isEmpty() ? 0 : ((double) isAnswerCount / QuestionContents.size()) * 100;
+                    eventInfo.setRepresentativeQuestion(representativeQuestion);
+                    eventInfo.setTotalAnswerCount(isAnswerCount);
+                    eventInfo.setTotalQuestionCount((long) QuestionContents.size());
+                    return eventInfo;
+                }).toList();
+    }
 }

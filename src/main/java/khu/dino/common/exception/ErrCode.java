@@ -24,7 +24,9 @@ public enum ErrCode {
 
     EVENT_NOT_FOUND("EVENT404", "해당 event 를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST.value()),
 
-    MEMBER_NOT_FOUND("MEMBER404", "해당 member 를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST.value())
+    MEMBER_NOT_FOUND("MEMBER404", "해당 member 를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST.value()),
+
+    QUESTION_NOT_FOUND("QUESTION404", "해당 질문을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST.value()),
 
     ;
 

@@ -3,6 +3,8 @@ package khu.dino.question.implement;
 import khu.dino.common.annotation.Adapter;
 import khu.dino.common.auth.PrincipalDetails;
 import khu.dino.event.persistence.Event;
+import khu.dino.common.exception.ErrCode;
+import khu.dino.common.exception.question.QuestionException;
 import khu.dino.member.persistence.Member;
 import khu.dino.question.persistence.Question;
 import khu.dino.question.persistence.repository.QuestionRepository;
@@ -24,5 +26,13 @@ public class QuestionQueryAdapter {
 
     public List<Question> findByMemberAndEvent(Member member, Event event){
         return questionRepository.findByOwnerAndEvent(member, event);
+    }
+
+    public List<Question> getHiStoryQuestion(PrincipalDetails principalDetails) {
+        return questionRepository.findAllByOwnerAndIsPriorityIsTrueOrderByOccurredAtAsc(principalDetails.getMember());
+    }
+
+    public Question getQuestionByIdAndOwner(Long questionId, Member member) {
+        return questionRepository.findQuestionByIdAndOwner(questionId, member).orElseThrow( () -> new QuestionException(ErrCode.QUESTION_NOT_FOUND.getMessage()));
     }
 }

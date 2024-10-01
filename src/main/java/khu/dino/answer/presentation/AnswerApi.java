@@ -1,7 +1,6 @@
 package khu.dino.answer.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -38,5 +38,15 @@ public class AnswerApi {
 //
 //        return CommonResponse.onSuccess(null);
 //    }
+    private final AwsS3Util awsS3Util;
+
+
+    @Operation(summary = "S3 버킷 내 파일 업로드 기능입니다, ", description = "S3 업로드를 담당하는 테스트 용 API입니다.")
+    @PostMapping("/upload")
+    @PreAuthorize("isAuthenticated()")
+    public String uploadS3Object(@AuthMember PrincipalDetails principalDetails, @RequestPart(value = "mediaFile", required= true) MultipartFile multipartFile) throws Exception {
+        return awsS3Util.uploadAnswerObject(principalDetails.getMember().getSocialId(), multipartFile, 0L, 0L, 0L );
+    }
+
 
 }
