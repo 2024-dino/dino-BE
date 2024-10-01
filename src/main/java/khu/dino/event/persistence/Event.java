@@ -88,5 +88,8 @@ public class Event extends BaseEntity {
         this.memo = request.getMemo();
         this.occurrenceTime = request.getOccurrenceTime();
     }
+    public void setRepresentativeQuestion(Question question) {
+        this.representativeQuestion = question;
+    }
 
 }
