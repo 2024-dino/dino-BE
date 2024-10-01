@@ -21,6 +21,10 @@ public class QuestionCommandAdapter {
         questionRepository.saveAll(questions);
     }
 
+    @Transactional
+    public void setIsAnswered(Question question, boolean answered) {
+        question.updateIsAnswered(answered);
+    }
 
     @Transactional
     public void setQuestionBookmarkStatus(Question question, Boolean priority) {

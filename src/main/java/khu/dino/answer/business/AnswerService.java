@@ -8,6 +8,7 @@ import khu.dino.answer.presentation.dto.AnswerRequestDto;
 import khu.dino.common.auth.PrincipalDetails;
 import khu.dino.common.util.AwsS3Util;
 import khu.dino.member.persistence.Member;
+import khu.dino.question.implement.QuestionCommandAdapter;
 import khu.dino.question.implement.QuestionQueryAdapter;
 import khu.dino.question.persistence.Question;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class AnswerService {
     private final AnswerCommandAdapter answerCommandAdapter;
     private final AnswerQueryAdapter answerQueryAdapter;
+    private final QuestionCommandAdapter questionCommandAdapter;
     private final AwsS3Util awsS3Util;
-
-
     private final QuestionQueryAdapter questionQueryAdapter;
 
     @Transactional(readOnly = false)
@@ -33,6 +33,7 @@ public class AnswerService {
         Member member = principalDetails.getMember();
         Question question = questionQueryAdapter.findById(questionId);
 
+        questionCommandAdapter.setIsAnswered(question, true);
         Answer answer = saveAnswerInfo(member, question, request);
         saveAnswerMedia(member, mediaFile, question.getEvent().getId(), questionId, answer);
     }

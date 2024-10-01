@@ -47,6 +47,9 @@ public class Question extends BaseEntity {
     @Builder.Default
     public Boolean isAnswered = false;
 
+    public void updateIsAnswered(boolean isAnswered) {
+        this.isAnswered = isAnswered;
+    }
 
     public void updatePriorityStatus(Boolean isPriority) {
         this.isPriority = isPriority;
