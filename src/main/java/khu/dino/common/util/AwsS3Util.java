@@ -27,7 +27,7 @@ public class AwsS3Util {
     private final AmazonS3Client amazonS3Client;
 
 
-    public String uploadAnswerObject(String username, MultipartFile object,Long eventId, Long QuewsionId, Long AwnserId) throws Exception {
+    public String uploadAnswerObject(String username, MultipartFile object,Long eventId, Long QuestionId, Long AnswerId) throws Exception {
 
 
         String originalName = object.getOriginalFilename(); //파일 이름 추출
@@ -35,7 +35,7 @@ public class AwsS3Util {
         String generateFileName = UUID.randomUUID() + "." + extension;
         log.info(generateFileName);
 
-        String filename = "DayDream" + File.separator + username + File.separator + eventId + File.separator +  QuewsionId + File.separator +  AwnserId + File.separator + generateFileName;
+        String filename = "DayDream" + File.separator + username + File.separator + eventId + File.separator +  QuestionId + File.separator +  AnswerId + File.separator + generateFileName;
         log.info(filename);
         ObjectMetadata objectMetadata = new ObjectMetadata();
         log.info(object.getContentType());

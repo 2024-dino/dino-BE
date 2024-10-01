@@ -1,10 +1,12 @@
 package khu.dino.answer.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import khu.dino.answer.business.AnswerService;
+import khu.dino.answer.presentation.dto.AnswerRequestDto;
 import khu.dino.answer.presentation.dto.AnswerResponseDto;
 import khu.dino.common.CommonResponse;
 import khu.dino.common.annotation.AuthMember;
@@ -12,6 +14,7 @@ import khu.dino.common.auth.PrincipalDetails;
 import khu.dino.common.util.AwsS3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,17 +32,19 @@ import java.util.List;
 @RequestMapping("/api/v1/answer")
 public class AnswerApi {
     private final AnswerService answerService;
-
-//    @Operation(summary="질문에 대한 답변 작성하기 API", description = "특정 질문에 대한 답변을 작성하는 API 입니다.")
-//    @PreAuthorize("isAuthenticated()")
-//    @PostMapping("/{questionId}")
-//    public CommonResponse<?> createAnswer(@AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails,
-//
-//                                          ){
-//
-//        return CommonResponse.onSuccess(null);
-//    }
     private final AwsS3Util awsS3Util;
+
+    @Operation(summary="질문에 대한 답변 작성하기 API", description = "특정 질문에 대한 답변을 작성하는 API 입니다.")
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping(value = "/{question-id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public CommonResponse<?> createAnswer(@AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails,
+                                          @PathVariable(name = "question-id") Long questionId,
+                                          @RequestPart(value = "mediaFile") MultipartFile mediaFile,
+                                          @RequestBody AnswerRequestDto.writeAnswerDto request) throws Exception{
+        answerService.saveAnswer(principalDetails, questionId, request, mediaFile);
+        return CommonResponse.onSuccess(null);
+    }
+
 
 
     @Operation(summary = "S3 버킷 내 파일 업로드 기능입니다, ", description = "S3 업로드를 담당하는 테스트 용 API입니다.")
