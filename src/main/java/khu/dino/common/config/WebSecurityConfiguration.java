@@ -89,10 +89,7 @@ public class WebSecurityConfiguration {
         configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:60000", "https://www.khu-dino.n-e.kr", "https://www.khu-dino.n-e.kr:60000"));
         configuration.addAllowedOriginPattern("*");
         configuration.addAllowedMethod("*");
-
-        configuration.addAllowedHeader("authorization");
-        configuration.addAllowedHeader("Content-Type");
-        configuration.addExposedHeader("Cache-Control");
+        configuration.addAllowedHeader("*"); // 모든 헤더 허용
 
         configuration.addExposedHeader("authorization");
         configuration.addExposedHeader("Cache-Control");
