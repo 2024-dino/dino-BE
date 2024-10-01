@@ -60,9 +60,9 @@ public class QuestionMapper {
         }
     }
 
-    public static QuestionResponseDto.questionContent questionToQuestionContent(Question question) {
+    public static QuestionResponseDto.QuestionContent questionToQuestionContent(Question question) {
         if(question.getAnswer() == null) {
-            return QuestionResponseDto.questionContent.builder()
+            return QuestionResponseDto.QuestionContent.builder()
                     .questionId(question.getId())
                     .content(question.getContent())
                     .questionDate(question.getOccurredAt())
@@ -70,7 +70,7 @@ public class QuestionMapper {
                     .isAnswer(false)
                     .build();
         }else{
-            return  QuestionResponseDto.questionContent.builder()
+            return  QuestionResponseDto.QuestionContent.builder()
                     .questionId(question.getId())
                     .content(question.getContent())
                     .questionDate(question.getOccurredAt())
@@ -83,8 +83,8 @@ public class QuestionMapper {
         }
     }
 
-    public static List<QuestionResponseDto.questionContent> questionListToQuestionContentList(List<Question> questionList) {
-        List<QuestionResponseDto.questionContent> questionContentList = new ArrayList<>();
+    public static List<QuestionResponseDto.QuestionContent> questionListToQuestionContentList(List<Question> questionList) {
+        List<QuestionResponseDto.QuestionContent> questionContentList = new ArrayList<>();
 
         questionList.stream()
                 .map(question -> questionToQuestionContent(question))
@@ -133,7 +133,7 @@ public class QuestionMapper {
 
     public static AnswerResponseDto.questionAndAnswerDto questionToQuestionAndAnswerDto(Question question) {
 
-        if(!question.isAnswered()) {
+        if(!question.isAnswered) {
             return AnswerResponseDto.questionAndAnswerDto.builder()
                     .questionId(question.getId())
                     .questionContent(question.getContent())

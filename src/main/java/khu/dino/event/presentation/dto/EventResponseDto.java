@@ -63,10 +63,10 @@ public class EventResponseDto {
         @DateTimeFormat(pattern = "HH:mm")
         private LocalTime occurrenceTime;
 
-        QuestionResponseDto.questionContent representativeQuestion;
+        QuestionResponseDto.QuestionContent representativeQuestion;
 
         @Builder.Default
-        List<QuestionResponseDto.questionContent> questionContent = new ArrayList<>();
+        List<QuestionResponseDto.QuestionContent> questionContent = new ArrayList<>();
     }
 
     @Builder
