@@ -1,6 +1,8 @@
 package khu.dino.event.business;
 
 import khu.dino.common.auth.PrincipalDetails;
+import khu.dino.common.exception.ErrCode;
+import khu.dino.common.exception.event.EventException;
 import khu.dino.common.openai.OpenAIUtil;
 import khu.dino.event.implement.EventCommandAdapter;
 import khu.dino.event.implement.EventQueryAdapter;
@@ -107,5 +109,17 @@ public class EventService {
                     eventInfo.setTotalQuestionCount((long) QuestionContents.size());
                     return eventInfo;
                 }).toList();
+    }
+
+    @Transactional(readOnly = false)
+    public void setRepresentativeQuestion(Long eventId, Long questionId){
+        Event event = eventQueryAdapter.findById(eventId);
+        List<Question> questionList = event.getQuestionList();
+        Question question = questionQueryAdapter.findById(questionId);
+        if(!questionList.contains(question)){
+            log.error("해당 질문은 해당 이벤트의 질문이 아닙니다.");
+            throw new EventException(ErrCode.INVALID_QUESTION_REQUEST.getMessage());
+        }
+        event.setRepresentativeQuestion(question);
     }
 }

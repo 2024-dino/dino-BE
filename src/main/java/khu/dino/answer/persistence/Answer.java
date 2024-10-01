@@ -3,6 +3,7 @@ package khu.dino.answer.persistence;
 import jakarta.persistence.*;
 import khu.dino.answer.persistence.enums.Type;
 import khu.dino.common.base.BaseEntity;
+import khu.dino.member.persistence.Member;
 import khu.dino.question.persistence.Question;
 import lombok.*;
 
@@ -23,6 +24,10 @@ public class Answer extends BaseEntity {
     @JoinColumn(name = "question_id")
     private Question question;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member owner;
+
     private String content;
 
     @Enumerated(EnumType.STRING)
@@ -30,4 +35,9 @@ public class Answer extends BaseEntity {
 
     private String fileUrl;
     private String fileName;
+
+    public void updateFileUrl(String fileUrl, String fileName) {
+        this.fileUrl = fileUrl;
+        this.fileName = fileName;
+    }
 }

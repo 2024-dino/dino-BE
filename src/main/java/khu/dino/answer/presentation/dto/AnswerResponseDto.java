@@ -25,6 +25,9 @@ public class AnswerResponseDto {
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         private LocalDate answeredAt;
 
+        @Builder.Default
+        String eventTitle = null;
+
         @Enumerated(EnumType.STRING)
         private Type answerType;
 

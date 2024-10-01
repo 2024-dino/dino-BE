@@ -37,8 +37,6 @@ public class QuestionResponseDto {
         @Builder.Default
         String myAnswer = null;
 
-
-
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         private LocalDate answeredAt;
@@ -47,6 +45,8 @@ public class QuestionResponseDto {
         @Builder.Default
         Type type = null;
 
+        @Builder.Default
+        String eventTitle = null;
 
 
     }

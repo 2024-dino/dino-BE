@@ -19,6 +19,10 @@ import java.util.List;
 public class QuestionQueryAdapter {
     private final QuestionRepository questionRepository;
 
+    public Question findById(Long questionId){
+        return questionRepository.findById(questionId).orElseThrow(() -> new QuestionException(ErrCode.QUESTION_NOT_FOUND.getMessage()));
+    }
+
     public List<Question> occurredAtBetweenStartDateAndEndDate(PrincipalDetails principalDetails, LocalDate startDate, LocalDate endDate) {
         Specification<Question> spec = QuestionSpecification.occurredAtBetweenStartDateAndEndDate(principalDetails.getMember().getId(),startDate, endDate);
         return questionRepository.findAll(spec);

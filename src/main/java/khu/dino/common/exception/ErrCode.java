@@ -28,6 +28,7 @@ public enum ErrCode {
 
     QUESTION_NOT_FOUND("QUESTION404", "해당 질문을 찾을 수 없습니다.", HttpStatus.BAD_REQUEST.value()),
 
+    INVALID_QUESTION_REQUEST("QUESTION400_2", "해당 질문은 해당 이벤트의 질문이 아닙니다.", HttpStatus.BAD_REQUEST.value()),
     ;
 
     private final String code;

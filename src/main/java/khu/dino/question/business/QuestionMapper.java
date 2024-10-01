@@ -47,6 +47,7 @@ public class QuestionMapper {
                      .content(question.getContent())
                      .questionDate(question.getOccurredAt())
                      .isAnswer(question.getIsAnswered())
+                     .eventTitle(question.getEvent().getTitle())
                      .build();
         }else{
             return  QuestionResponseDto.QuestionContent.builder()
@@ -57,6 +58,7 @@ public class QuestionMapper {
                     .myAnswer(question.getAnswer().getContent())
                     .answeredAt(question.getAnswer().getCreatedAt().toLocalDate())
                     .fileUrl(question.getAnswer().getFileUrl())
+                    .eventTitle(question.getEvent().getTitle())
                     .build();
         }
     }
@@ -69,6 +71,7 @@ public class QuestionMapper {
                     .questionDate(question.getOccurredAt())
                     .isPriority(question.getIsPriority())
                     .isAnswer(false)
+                    .eventTitle(question.getEvent().getTitle())
                     .build();
         }else{
             return  QuestionResponseDto.QuestionContent.builder()
@@ -81,6 +84,7 @@ public class QuestionMapper {
                     .answeredAt(question.getAnswer().getCreatedAt().toLocalDate())
                     .fileUrl(question.getAnswer().getFileUrl())
                     .isPriority(question.getIsPriority())
+                    .eventTitle(question.getEvent().getTitle())
                     .build();
         }
     }
@@ -143,6 +147,7 @@ public class QuestionMapper {
                     .answerContent("")
                     .answerFileUrl("")
                     .answerFileName("")
+                    .eventTitle(question.getEvent().getTitle())
                     .build();
         }
         else return AnswerResponseDto.questionAndAnswerDto.builder()
@@ -153,6 +158,7 @@ public class QuestionMapper {
                 .answeredAt(question.getAnswer().getCreatedAt().toLocalDate())
                 .answerFileUrl(question.getAnswer().getFileUrl())
                 .answerFileName(question.getAnswer().getFileName())
+                .eventTitle(question.getEvent().getTitle())
                 .build();
     }
 }

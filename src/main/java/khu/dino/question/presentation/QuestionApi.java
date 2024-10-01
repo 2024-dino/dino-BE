@@ -9,6 +9,7 @@ import khu.dino.answer.presentation.dto.AnswerResponseDto;
 import khu.dino.common.CommonResponse;
 import khu.dino.common.annotation.AuthMember;
 import khu.dino.common.auth.PrincipalDetails;
+import khu.dino.event.business.EventService;
 import khu.dino.question.business.QuestionService;
 import khu.dino.question.presentation.dto.QuestionResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ import java.util.List;
 public class QuestionApi {
 
     private final QuestionService questionService;
+    private final EventService eventService;
 
 
 
@@ -48,6 +50,20 @@ public class QuestionApi {
             @PathVariable(name = "eventId") Long eventId){
             return CommonResponse.onSuccess(questionService.getQuestionAndAnswerList(principalDetails, eventId));
     }
+
+    @Operation(summary="[대표 질문 선택 페이지] 대표 질문 선택 API", description = "특정 이벤트의 대표 질문을 선택하는 API 입니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "QUESTION400_2", description = "BAD_REQUEST, 해당 질문은 해당 이벤트의 질문이 아닙니다.")
+    })
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping("/{event-id}/representativeQuestion/{question-id}")
+    public CommonResponse<?> setRepresentativeQuestion(@AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails,
+                                                          @RequestParam(required = true, name= "event-id") Long eventId,
+                                                          @RequestParam(required = true, name= "question-id") Long questionId){
+        eventService.setRepresentativeQuestion(eventId, questionId);
+        return CommonResponse.onSuccess(null);
+    }
+
 
     @Operation(summary = "질문 북마크 선택 및 취소하기", description = "질문을 저장하는(북마크)하거나 취소하는 API입니다.")
     @PreAuthorize("isAuthenticated()")
