@@ -7,6 +7,7 @@ import khu.dino.event.persistence.enums.Emotion;
 import khu.dino.event.persistence.enums.Status;
 import khu.dino.event.presentation.dto.EventResponseDto;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,8 +22,8 @@ public class QuestionResponseDto {
     public static class QuestionContent {
         @Builder.Default
         Long questionId = 0L;
-//        @Builder.Default
-//        Integer sequence = 0;
+
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         @Builder.Default
         LocalDate questionDate = null;
 
@@ -35,8 +36,12 @@ public class QuestionResponseDto {
 
         @Builder.Default
         String myAnswer = null;
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 
+
+
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        private LocalDate answeredAt;
         @Builder.Default
         String fileUrl = null; //답변 파일
         @Builder.Default

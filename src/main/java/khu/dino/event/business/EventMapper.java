@@ -115,6 +115,7 @@ public class EventMapper {
                     .fileUrl(question.getAnswer().getFileUrl())
                     .type(question.getAnswer().getType())
                     .myAnswer(question.getAnswer().getContent())
+                    .answeredAt(question.getAnswer().getCreatedAt().toLocalDate())
                     .build();
         }
     }

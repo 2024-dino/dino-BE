@@ -204,6 +204,9 @@ public class EventResponseDto {
         private Boolean isAnswer = false;
         @Builder.Default
         private String myAnswer = null;
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        private LocalDate answeredAt;
         @Builder.Default
         private Boolean isPriority = false;
         @Builder.Default
