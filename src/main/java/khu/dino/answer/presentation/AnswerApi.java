@@ -9,6 +9,7 @@ import khu.dino.answer.presentation.dto.AnswerResponseDto;
 import khu.dino.common.CommonResponse;
 import khu.dino.common.annotation.AuthMember;
 import khu.dino.common.auth.PrincipalDetails;
+import khu.dino.common.util.AwsS3Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;

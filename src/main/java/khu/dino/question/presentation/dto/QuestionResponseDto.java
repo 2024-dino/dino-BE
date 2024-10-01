@@ -62,6 +62,37 @@ public class QuestionResponseDto {
     }
 
 
+    @Builder
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class EventContent {
+        @Builder.Default
+        private Long eventId = 0L;
+        @Builder.Default
+        private String title = null;
+        @Builder.Default
+        private Step step = null;
+        @Builder.Default
+        private Emotion emotion = null;
+        @Builder.Default
+        private Status eventStatus = null;
+        @Builder.Default
+        private Long questionId = 0L;
+        @Builder.Default
+        private String content = "";
+        @Builder.Default
+        private Boolean isAnswer = false;
+        @Builder.Default
+        private String myAnswer = null;
+        @Builder.Default
+        private Boolean isPriority = false;
+        @Builder.Default
+        private String fileUrl = null;
+        @Builder.Default
+        private Type type = null;
+    }
 
 
     @Builder

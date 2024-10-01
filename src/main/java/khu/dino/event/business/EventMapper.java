@@ -38,7 +38,7 @@ public class EventMapper {
     public static EventResponseDto.eventDetailDto toEventDetailDto(Event event, List<Question> questionList) {
         Long totalQuestionCount = 0L;
         for(Question question : questionList) {
-            if(question.isAnswered()) totalQuestionCount++;
+            if(question.isAnswered) totalQuestionCount++;
         }
 
         return EventResponseDto.eventDetailDto.builder()
