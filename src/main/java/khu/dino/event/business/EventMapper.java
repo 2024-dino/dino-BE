@@ -52,7 +52,7 @@ public class EventMapper {
                 .totalQuestionCount(event.getTotalQuestionCount())
                 .totalAnswerCount(totalQuestionCount)
                 .occurrenceTime(event.getOccurrenceTime())
-                .representativeQuestion(QuestionMapper.questionToQuestionContent(event.getRepresentativeQuestion()))
+                .representativeQuestion(event.getRepresentativeQuestion() != null ?  QuestionMapper.questionToQuestionContent(event.getRepresentativeQuestion()) : null)
                 .questionContent(QuestionMapper.questionListToQuestionContentList(questionList))
                 .build();
     }
