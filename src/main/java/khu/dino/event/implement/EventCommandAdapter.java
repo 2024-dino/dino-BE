@@ -23,4 +23,8 @@ public class EventCommandAdapter {
     public void update(Event event, EventRequestDto.modifyEventInfoDto request) {
         event.update(request);
     }
+
+    public void deleteById(Long eventId) {
+        eventRepository.deleteById(eventId);
+    }
 }
