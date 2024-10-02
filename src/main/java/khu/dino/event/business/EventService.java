@@ -1,5 +1,6 @@
 package khu.dino.event.business;
 
+import khu.dino.answer.implement.AnswerCommandAdapter;
 import khu.dino.common.auth.PrincipalDetails;
 import khu.dino.common.exception.ErrCode;
 import khu.dino.common.exception.event.EventException;
@@ -121,5 +122,16 @@ public class EventService {
             throw new EventException(ErrCode.INVALID_QUESTION_REQUEST.getMessage());
         }
         event.setRepresentativeQuestion(question);
+    }
+
+    @Transactional(readOnly = false)
+    public void deleteEvent(Member member, Long eventId){
+        Event event = eventQueryAdapter.findById(eventId);
+
+        if (!event.getCreator().equals(member)) {
+            throw new EventException(ErrCode.EVENT_NOT_OWNER.getMessage());
+        }
+        eventCommandAdapter.deleteById(eventId);
+
     }
 }

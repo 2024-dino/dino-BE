@@ -68,6 +68,17 @@ public class EventApi {
     }
 
 
+    @DeleteMapping("/{eventId}")
+    @Operation(summary = "특정 이벤트 삭제하기", description = "특정 이벤트를 삭제하는 API 입니다.")
+    public CommonResponse<?> deleteEvent(@AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails,
+                                         @PathVariable(name = "eventId") Long eventId){
+
+        eventService.deleteEvent(principalDetails.getMember(), eventId);
+
+        return CommonResponse.onSuccess(null);
+    }
+
+
 
 
 
