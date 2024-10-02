@@ -67,7 +67,7 @@ public class QuestionApi {
 
     @Operation(summary = "질문 북마크 선택 및 취소하기", description = "질문을 저장하는(북마크)하거나 취소하는 API입니다.")
     @PreAuthorize("isAuthenticated()")
-    @PutMapping("/{question-id}/priority")
+    @PutMapping("/{question-id}")
     public CommonResponse<Void> setQuestionBookmarkStatus(@AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails, @RequestParam(required = true, name="question-id") Long questionId, @RequestParam(required = true, name="priority") Boolean priority) {
         return  CommonResponse.onSuccess(questionService.setQuestionPriorityStatus(principalDetails, questionId, priority));
     }
