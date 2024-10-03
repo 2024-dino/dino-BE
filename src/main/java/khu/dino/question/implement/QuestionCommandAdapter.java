@@ -32,4 +32,7 @@ public class QuestionCommandAdapter {
     }
 
 
+    public void deleteById(Long id) {
+        questionRepository.deleteById(id);
+    }
 }

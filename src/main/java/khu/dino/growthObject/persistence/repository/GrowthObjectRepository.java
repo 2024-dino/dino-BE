@@ -11,4 +11,6 @@ import java.util.List;
 public interface GrowthObjectRepository extends JpaRepository<GrowthObject, Long> {
 
     List<GrowthObject> findAllByStepAndEmotion(Step step, Emotion emotion);
+
+    List<GrowthObject> findAllByStepAndEmotionAndFileNameStartingWith(Step step, Emotion emotion, String fileName);
 }

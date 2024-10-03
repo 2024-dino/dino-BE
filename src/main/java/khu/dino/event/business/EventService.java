@@ -34,6 +34,7 @@ public class EventService {
     private final EventQueryAdapter eventQueryAdapter;
     private final QuestionQueryAdapter questionQueryAdapter;
     private final QuestionCommandAdapter questionCommandAdapter;
+    private final AnswerCommandAdapter answerCommandAdapter;
 
     private final EventMapper eventMapper;
     private final QuestionMapper questionMapper;
@@ -127,8 +128,15 @@ public class EventService {
     @Transactional(readOnly = false)
     public void deleteEvent(Member member, Long eventId){
         Event event = eventQueryAdapter.findById(eventId);
+        List<Question> questionList = event.getQuestionList();
+        for( Question question : questionList){
+            if(question.getIsAnswered()) {
+                answerCommandAdapter.deleteById(question.getAnswer().getId());
+            }
+            questionCommandAdapter.deleteById(question.getId());
+        }
 
-        if (!event.getCreator().equals(member)) {
+        if (!event.getCreator().getId().equals(member.getId())) {
             throw new EventException(ErrCode.EVENT_NOT_OWNER.getMessage());
         }
         eventCommandAdapter.deleteById(eventId);

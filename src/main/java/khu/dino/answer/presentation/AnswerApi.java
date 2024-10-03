@@ -52,7 +52,7 @@ public class AnswerApi {
     @PostMapping("/upload")
     @PreAuthorize("isAuthenticated()")
     public String uploadS3Object(@AuthMember PrincipalDetails principalDetails, @RequestPart(value = "mediaFile", required= true) MultipartFile multipartFile) throws Exception {
-        return awsS3Util.uploadAnswerObject(principalDetails.getMember().getSocialId(), multipartFile, 0L, 0L, 0L );
+        return awsS3Util.uploadAnswerObject(principalDetails.getMember().getId(), multipartFile, 0L, 0L, 0L );
     }
 
 

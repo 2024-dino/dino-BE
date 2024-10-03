@@ -13,4 +13,8 @@ public class AnswerCommandAdapter {
     public Answer saveAnswer(Answer answer) {
         return answerRepository.save(answer);
     }
+
+    public void deleteById(Long id) {
+        answerRepository.deleteById(id);
+    }
 }
