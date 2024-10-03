@@ -79,6 +79,7 @@ public class Event extends BaseEntity {
 
 
     public void update(EventRequestDto.modifyEventInfoDto request){
+        this.title = request.getTitle();
         this.endDate = request.getEndDate();
         this.memo = request.getMemo();
         this.occurrenceTime = request.getOccurrenceTime();

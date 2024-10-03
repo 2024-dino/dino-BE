@@ -47,6 +47,8 @@ public class EventRequestDto {
     @Getter
     public static class modifyEventInfoDto{
 
+        private String title;
+
         private String memo;
 
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
