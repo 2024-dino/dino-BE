@@ -7,6 +7,7 @@ import khu.dino.answer.persistence.enums.Type;
 import khu.dino.answer.presentation.dto.AnswerRequestDto;
 import khu.dino.common.auth.PrincipalDetails;
 import khu.dino.common.util.AwsS3Util;
+import khu.dino.common.util.MultipartFileUtil;
 import khu.dino.event.implement.EventQueryAdapter;
 import khu.dino.event.persistence.Event;
 import khu.dino.member.persistence.Member;
@@ -39,7 +40,9 @@ public class AnswerService {
 
         questionCommandAdapter.setIsAnswered(question, true);
         Answer answer = saveAnswerInfo(member, question, request);
-        saveAnswerMedia(member, mediaFile, event.getId(), questionId, answer);
+        if(mediaFile != null) {
+            saveAnswerMedia(member, mediaFile, event.getId(), questionId, answer);
+        }
     }
 
     @Transactional(readOnly = false)
@@ -51,7 +54,8 @@ public class AnswerService {
     public void saveAnswerMedia(Member member, MultipartFile mediaFile, Long eventId,Long questionId, Answer answer) throws Exception {
         Long answerId = answer.getId();
         String fileUrl = awsS3Util.uploadAnswerObject(member.getNickname(), mediaFile, eventId, questionId, answerId);
+        Type type = MultipartFileUtil.getFileType(mediaFile);
         String fileName = mediaFile.getOriginalFilename();
-        answer.updateFileUrl(fileUrl, fileName);
+        answer.updateFileUrl(fileUrl, fileName, type);
     }
 }

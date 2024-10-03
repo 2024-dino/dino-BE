@@ -36,8 +36,9 @@ public class Answer extends BaseEntity {
     private String fileUrl;
     private String fileName;
 
-    public void updateFileUrl(String fileUrl, String fileName) {
+    public void updateFileUrl(String fileUrl, String fileName, Type type) {
         this.fileUrl = fileUrl;
         this.fileName = fileName;
+        this.type = type;
     }
 }
