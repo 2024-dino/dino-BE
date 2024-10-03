@@ -64,35 +64,53 @@ public class OpenAIUtil {
         LocalDate startDate = request.getStartDate();
         LocalDate endDate = request.getEndDate();
         Map<Long, String> result = getStringStringMap(extractJsonData(openAIResponse.getChoices().get(0).getMessage().getContent()));
+        log.info("질문 결과 : " + result);
+        long totalDays = ChronoUnit.DAYS.between(startDate, endDate);
+        log.info("총 이벤트 차이 기간 : " + totalDays + "일");
 
 
-        long totalDays = ChronoUnit.DAYS.between(startDate.plusDays(1), endDate.minusDays(1));
-        float interval =  (float) totalDays / ( result.size() - 2 ); // 이벤트 시작 날, 마지막 날 제외하여 인터벌 생성하도록.
+        List<Integer> positions = new ArrayList<>();
+        // 질문 수가 최대 일수보다 많으면 최대 일수로 설정
+            // 질문 발생 위치 계산
+        for (int i = 0; i < result.size(); i++) {
+            int pos = (int) Math.round((double) i * totalDays / (result.size() - 1));
+            if (!positions.contains(pos)) {
+                positions.add(pos);
+            }
+        }
 
         List<LocalDate> pushDates = new ArrayList<>();
-
-        for (int i = 1; i < result.size()-1; i++) {
-            pushDates.add(startDate.plusDays(Math.round(interval * i)).isEqual(endDate) ? endDate.minusDays(1) : startDate.plusDays(Math.round( interval * i))  ); //우선 담고 보자.
+        for (int pos : positions) {
+            LocalDate date = startDate.plusDays(pos);
+            pushDates.add(date);
         }
-        pushDates.add(endDate);
-        for(int i = 0; i < result.size()-1; i++){
-            log.info("질문 내용 : " + result.get((long) i + 1) + ", 질문 발생일: " + pushDates.get(i));
+
+
+
+
+
+
+//        float interval =  (float) totalDays / ( result.size() - 2 ); // 이벤트 시작 날, 마지막 날 제외하여 인터벌 생성하도록.
+//        log.info("인터벌 : " + interval);
+//
+//        LocalDate setDate = startDate.plusDays(1);
+////        log.info("시작 날짜 : " + setDate);
+////        for (int i = 1; i < result.size()-1; i++) {
+//            pushDates.add(setDate.plusDays(Math.round(interval * i)));
+//        }
+        log.info("푸시 날짜 : " + pushDates);
+        for(int i = 1; i < result.size(); i++){
+            log.info("질문 내용 : " + result.get((long) i) + ", 질문 발생일: " + pushDates.get(i));
         }
 
         // 특정 이벤트에 대한 Question 리스트 생성하여 db에 저장하는 로직 추가하기
         List<QuestionRequestDto.questionSimpleInfoDto> questionSimpleInfoDtoList = new ArrayList<>();
 
-        questionSimpleInfoDtoList.add(
-                QuestionRequestDto.questionSimpleInfoDto.builder()
-                        .content(result.get(1L)) //첫번째날 질문은 무조건 반환되어야하기에.
-                        .occurredAt(request.getStartDate())
-                        .build()
-        );
-        for(int i = 1; i < result.size(); i++){
+        for(int i = 0; i < result.size(); i++){
             questionSimpleInfoDtoList.add(
             QuestionRequestDto.questionSimpleInfoDto.builder()
-                    .content(result.get((long) i + 1))
-                    .occurredAt(pushDates.get(i-1))
+                    .content(result.get((long)(i)+1))
+                    .occurredAt(pushDates.get(i))
                     .build()
             );
         }

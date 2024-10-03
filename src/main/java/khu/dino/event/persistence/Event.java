@@ -35,8 +35,6 @@ public class Event extends BaseEntity {
 
     private String title;
 
-//    @Enumerated(EnumType.STRING)
-//    private Category category;
 
     private String memo;
 
@@ -51,9 +49,6 @@ public class Event extends BaseEntity {
 
     @ColumnDefault(value = "false")
     private boolean isDeleted;
-
-//    @Enumerated(EnumType.STRING)
-//    private Step step;
 
     @Enumerated(EnumType.STRING)
     @ColumnDefault(value = "EXECUTION")

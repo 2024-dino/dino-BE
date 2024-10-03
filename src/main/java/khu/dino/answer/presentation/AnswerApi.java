@@ -36,11 +36,11 @@ public class AnswerApi {
 
     @Operation(summary="질문에 대한 답변 작성하기 API", description = "특정 질문에 대한 답변을 작성하는 API 입니다.")
     @PreAuthorize("isAuthenticated()")
-    @PostMapping(value = "/{eventId}/question/{questionId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/{eventId}/question/{questionId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE,  MediaType.APPLICATION_OCTET_STREAM_VALUE})
     public CommonResponse<?> createAnswer(@AuthMember @Parameter(hidden = true) PrincipalDetails principalDetails,
                                           @PathVariable(name = "eventId") Long eventId,
                                           @PathVariable(name = "questionId") Long questionId,
-                                          @RequestPart(value = "mediaFile") MultipartFile mediaFile,
+                                          @RequestPart(value = "mediaFile", required = false) MultipartFile mediaFile,
                                           @RequestPart(value = "myAnswer") AnswerRequestDto.writeAnswerDto request) throws Exception{
         answerService.saveAnswer(principalDetails, eventId, questionId, request, mediaFile);
         return CommonResponse.onSuccess(null);

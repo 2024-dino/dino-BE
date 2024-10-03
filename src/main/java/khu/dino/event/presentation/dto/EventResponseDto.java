@@ -2,12 +2,8 @@ package khu.dino.event.presentation.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
-import khu.dino.common.enums.Step;
 import khu.dino.event.persistence.enums.Emotion;
 import khu.dino.event.persistence.enums.Status;
-import khu.dino.growthObject.persistence.enums.Category;
-import khu.dino.question.persistence.Question;
-import khu.dino.question.presentation.dto.QuestionRequestDto;
 import khu.dino.answer.persistence.enums.Type;
 import khu.dino.question.presentation.dto.QuestionResponseDto;
 import lombok.*;
