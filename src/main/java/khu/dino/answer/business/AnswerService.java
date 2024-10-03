@@ -7,6 +7,8 @@ import khu.dino.answer.persistence.enums.Type;
 import khu.dino.answer.presentation.dto.AnswerRequestDto;
 import khu.dino.common.auth.PrincipalDetails;
 import khu.dino.common.util.AwsS3Util;
+import khu.dino.event.implement.EventQueryAdapter;
+import khu.dino.event.persistence.Event;
 import khu.dino.member.persistence.Member;
 import khu.dino.question.implement.QuestionCommandAdapter;
 import khu.dino.question.implement.QuestionQueryAdapter;
@@ -26,16 +28,18 @@ public class AnswerService {
     private final QuestionCommandAdapter questionCommandAdapter;
     private final AwsS3Util awsS3Util;
     private final QuestionQueryAdapter questionQueryAdapter;
+    private final EventQueryAdapter eventQueryAdapter;
 
     @Transactional(readOnly = false)
-    public void saveAnswer(PrincipalDetails principalDetails,Long questionId, AnswerRequestDto.writeAnswerDto request,
+    public void saveAnswer(PrincipalDetails principalDetails, Long eventId, Long questionId, AnswerRequestDto.writeAnswerDto request,
                            MultipartFile mediaFile) throws Exception{
         Member member = principalDetails.getMember();
+        Event event = eventQueryAdapter.findById(eventId);
         Question question = questionQueryAdapter.findById(questionId);
 
         questionCommandAdapter.setIsAnswered(question, true);
         Answer answer = saveAnswerInfo(member, question, request);
-        saveAnswerMedia(member, mediaFile, question.getEvent().getId(), questionId, answer);
+        saveAnswerMedia(member, mediaFile, event.getId(), questionId, answer);
     }
 
     @Transactional(readOnly = false)
