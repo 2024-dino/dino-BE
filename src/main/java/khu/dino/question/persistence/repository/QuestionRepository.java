@@ -19,6 +19,8 @@ public interface QuestionRepository extends JpaRepository<Question, Long>, JpaSp
 
     Optional<Question> findQuestionByIdAndOwner(Long questionId, Member owner );
 
+    List<Question> findByEventAndIsAnsweredIsFalse(Event event);
+
 
 
 }

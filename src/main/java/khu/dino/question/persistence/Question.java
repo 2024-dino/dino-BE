@@ -54,4 +54,9 @@ public class Question extends BaseEntity {
     public void updatePriorityStatus(Boolean isPriority) {
         this.isPriority = isPriority;
     }
+
+
+    public void updateOccuredAt(LocalDate occuredAt) {
+        this.occurredAt = occuredAt;
+    }
 }
