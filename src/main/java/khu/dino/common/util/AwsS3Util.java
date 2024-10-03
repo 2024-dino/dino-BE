@@ -32,6 +32,7 @@ public class AwsS3Util {
 
         String originalName = object.getOriginalFilename(); //파일 이름 추출
         String extension = Objects.requireNonNull(originalName).substring(originalName.lastIndexOf(".") + 1);
+        extension = extension.equals("webm") ? "mp3" : extension;
         String generateFileName = UUID.randomUUID() + "." + extension;
         log.info(generateFileName);
 
