@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class RedirectFromDev implements RedirectFromProfile{
     @Override
     public String getRedirectUrl() {
-        //return "https://www.khu-dino.n-e.kr";
-        return "http://localhost:3000";
+        return "https://www.khu-dino.n-e.kr";
+//        return "http://localhost:3000";
     }
 }
