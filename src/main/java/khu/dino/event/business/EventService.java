@@ -126,6 +126,13 @@ public class EventService {
     }
 
     @Transactional(readOnly = false)
+    public void setEventStatusToTermination(Long eventId){
+        Event event = eventQueryAdapter.findById(eventId);
+        event.setStatus(Status.TERMINATION);
+
+    }
+
+    @Transactional(readOnly = false)
     public void deleteEvent(Member member, Long eventId){
         Event event = eventQueryAdapter.findById(eventId);
         List<Question> questionList = event.getQuestionList();

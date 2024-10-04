@@ -92,4 +92,8 @@ public class Event extends BaseEntity {
         this.growthObject = growthObject;
     }
 
+    public void setStatus(Status eventStatus) {
+        this.eventStatus = eventStatus;
+    }
+
 }
