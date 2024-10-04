@@ -86,7 +86,7 @@ public class WebSecurityConfiguration {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         //LOCAL 및 DEV 서버 도메인 허용
-        configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:60000", "https://www.khu-dino.n-e.kr", "https://www.khu-dino.n-e.kr:60000"));
+        configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:60000", "https://www.khu-dino.n-e.kr", "https://www.khu-dino.n-e.kr:60000","https://dino-fe.vercel.app", "https://dino-fe.vercel.app:3000"));
         configuration.addAllowedOriginPattern("*");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*"); // 모든 헤더 허용
