@@ -61,7 +61,7 @@ public class AnswerService {
             GrowthObject newGrowthObject = growthObjectList.get(0);
             event.setGrowthObject(newGrowthObject);
 
-        } else if (answeredPercentage >= 50) {
+        } else if (answeredPercentage >=30) {
             step = Step.LEVEL2;
             if(!event.getGrowthObject().getStep().equals(step)){
                 String fileName = event.getGrowthObject().getFileName(); //A1
