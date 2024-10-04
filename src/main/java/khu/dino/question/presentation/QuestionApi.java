@@ -61,6 +61,7 @@ public class QuestionApi {
                                                           @PathVariable(required = true, name= "event-id") Long eventId,
                                                           @PathVariable(required = true, name= "question-id") Long questionId){
         eventService.setRepresentativeQuestion(eventId, questionId);
+        eventService.setEventStatusToTermination(eventId);
         return CommonResponse.onSuccess(null);
     }
 
